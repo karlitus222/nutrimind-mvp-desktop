@@ -2,86 +2,97 @@ package br.com.nutrimind.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Patient {
-    private long id;
-    private long nutritionistId;
-    private String name;
+
+    private int id;
+    private String nome;
     private String cpf;
-    private LocalDate birthDate;
-    private String phone;
+    private LocalDate dataNascimento;
+    private String telefone;
     private String email;
-    private String clinicalNotes;
-    private String eatingHistory;
-    private boolean active;
-    private LocalDateTime createdAt;
+    private String observacoes;
+    private boolean ativo;
+    private LocalDateTime criadoEm;
+    private LocalDateTime atualizadoEm;
+    private List<Consultation> consultas = new ArrayList<>();
 
-    public Patient(long id, long nutritionistId, String name, String cpf, LocalDate birthDate, String phone,
-                   String email, String clinicalNotes, String eatingHistory, boolean active, LocalDateTime createdAt) {
-        this.id = id;
-        this.nutritionistId = nutritionistId;
-        this.name = name;
+    public Patient() {
+        this.ativo = true;
+        this.criadoEm = LocalDateTime.now();
+        this.atualizadoEm = LocalDateTime.now();
+    }
+
+    public Patient(String nome, String cpf, LocalDate dataNascimento, String telefone, String email) {
+        this();
+        this.nome = nome;
         this.cpf = cpf;
-        this.birthDate = birthDate;
-        this.phone = phone;
+        this.dataNascimento = dataNascimento;
+        this.telefone = telefone;
         this.email = email;
-        this.clinicalNotes = clinicalNotes;
-        this.eatingHistory = eatingHistory;
-        this.active = active;
-        this.createdAt = createdAt;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
+    public Patient(int id, String nome, String cpf, LocalDate dataNascimento,
+                   String telefone, String email, String observacoes,
+                   boolean ativo, LocalDateTime criadoEm, LocalDateTime atualizadoEm) {
         this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.telefone = telefone;
+        this.email = email;
+        this.observacoes = observacoes;
+        this.ativo = ativo;
+        this.criadoEm = criadoEm;
+        this.atualizadoEm = atualizadoEm;
     }
 
-    public long getNutritionistId() {
-        return nutritionistId;
+    public int getIdade() {
+        if (dataNascimento == null) return 0;
+        return Period.between(dataNascimento, LocalDate.now()).getYears();
     }
 
-    public String getName() {
-        return name;
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
+
+    public String getCpf() { return cpf; }
+    public void setCpf(String cpf) { this.cpf = cpf; }
+
+    public LocalDate getDataNascimento() { return dataNascimento; }
+    public void setDataNascimento(LocalDate dataNascimento) { this.dataNascimento = dataNascimento; }
+
+    public String getTelefone() { return telefone; }
+    public void setTelefone(String telefone) { this.telefone = telefone; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getObservacoes() { return observacoes; }
+    public void setObservacoes(String observacoes) { this.observacoes = observacoes; }
+
+    public boolean isAtivo() { return ativo; }
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+        this.atualizadoEm = LocalDateTime.now();
     }
 
-    public String getCpf() {
-        return cpf;
-    }
+    public LocalDateTime getCriadoEm() { return criadoEm; }
+    public void setCriadoEm(LocalDateTime criadoEm) { this.criadoEm = criadoEm; }
 
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
+    public LocalDateTime getAtualizadoEm() { return atualizadoEm; }
+    public void setAtualizadoEm(LocalDateTime atualizadoEm) { this.atualizadoEm = atualizadoEm; }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getClinicalNotes() {
-        return clinicalNotes;
-    }
-
-    public String getEatingHistory() {
-        return eatingHistory;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+    public List<Consultation> getConsultas() { return consultas; }
+    public void setConsultas(List<Consultation> consultas) { this.consultas = consultas; }
 
     @Override
     public String toString() {
-        return name;
+        return nome + " (CPF: " + cpf + ")";
     }
 }
-
