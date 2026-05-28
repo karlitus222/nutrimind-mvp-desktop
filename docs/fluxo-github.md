@@ -1,10 +1,12 @@
-# Fluxo de Trabalho no GitHub
+# Fluxo de Trabalho no GitHub Desktop
 
 ## Regra principal
 
-Ninguém trabalha direto na `main`. Cada pessoa cria uma branch própria, faz commits pequenos e abre Pull Request.
+Ninguém trabalha direto na `main`. Cada pessoa usa a própria branch, faz alterações no editor, salva pelo GitHub Desktop e abre um Pull Request.
 
-## Branches sugeridas
+Este guia é para trabalhar pela interface gráfica.
+
+## Branches do grupo
 
 - `pessoa1-login-readme`
 - `pessoa2-banco-der`
@@ -14,27 +16,47 @@ Ninguém trabalha direto na `main`. Cada pessoa cria uma branch própria, faz co
 - `pessoa6-controllers-fluxo`
 - `pessoa7-ia-testes-docs`
 
-## Passo a passo
+## Abrir a pasta do projeto
 
-```powershell
-git checkout main
-git pull
-git checkout -b pessoaX-nome-da-tarefa
-```
+1. Abra o GitHub Desktop.
+2. Selecione o repositório `nutrimind-mvp-desktop`.
+3. Clique em **Repository** no menu superior.
+4. Clique em **Show in Explorer** para abrir a pasta no Windows.
+5. Para editar o código, clique em **Repository > Open in Visual Studio Code** ou abra a pasta pelo editor que o grupo estiver usando.
 
-Depois de editar:
+## Escolher sua branch
 
-```powershell
-git add .
-git commit -m "feat: descrever a tarefa feita"
-git push origin pessoaX-nome-da-tarefa
-```
+1. No topo do GitHub Desktop, clique em **Current Branch**.
+2. Escolha a branch da sua pessoa.
+3. Clique em **Fetch origin**.
+4. Se aparecer **Pull origin**, clique para baixar a versão mais recente.
 
-No GitHub, abrir um Pull Request para a `main`.
+## Editar sua parte
+
+1. Abra a pasta no VS Code, IntelliJ, Eclipse ou outro editor.
+2. Mexa apenas nos arquivos combinados para sua pessoa.
+3. Salve os arquivos normalmente no editor.
+4. Volte para o GitHub Desktop para ver a lista de arquivos alterados.
+
+## Salvar e enviar alterações
+
+1. No GitHub Desktop, confira os arquivos alterados.
+2. Escreva uma mensagem curta no campo **Summary**, por exemplo `feat: ajustar tela de login`.
+3. Clique em **Commit to pessoaX...**.
+4. Clique em **Push origin** para enviar sua branch ao GitHub.
+
+## Abrir Pull Request
+
+1. Depois do push, clique em **Create Pull Request** no GitHub Desktop.
+2. O navegador vai abrir o GitHub.
+3. Confira se a comparação está da sua branch para a `main`.
+4. Escreva um resumo do que foi feito.
+5. Clique em **Create Pull Request**.
+6. Depois que outra pessoa revisar, o grupo pode juntar o Pull Request na `main`.
 
 ## Organização por Issues
 
-Crie uma issue para cada pessoa usando o template **Tarefa do MVP**. Cada issue deve listar:
+Cada pessoa deve usar a issue com seu número. A issue deve ter:
 
 - objetivo da pessoa;
 - arquivos principais;
@@ -44,6 +66,7 @@ Crie uma issue para cada pessoa usando o template **Tarefa do MVP**. Cada issue 
 ## Evitar conflitos
 
 - Não edite arquivo da área de outra pessoa sem avisar.
-- Antes de começar no dia, sempre rode `git pull`.
+- Antes de começar no dia, clique em **Fetch origin** e depois em **Pull origin** se aparecer.
 - Faça commits pequenos.
-- Não suba `.env`, banco local, `lib/`, `desktop/out/` ou arquivos gerados.
+- Não envie `.env`, banco local, `lib/`, `desktop/out/` ou arquivos gerados.
+- Se aparecer conflito no GitHub Desktop, pare e chame o grupo antes de apagar código.
