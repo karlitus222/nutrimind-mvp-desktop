@@ -9,90 +9,90 @@ import java.util.List;
 public class Patient {
 
     private int id;
-    private String nome;
+    private String name;
     private String cpf;
-    private LocalDate dataNascimento;
-    private String telefone;
+    private LocalDate birthDate;
+    private String phone;
     private String email;
-    private String observacoes;
-    private boolean ativo;
-    private LocalDateTime criadoEm;
-    private LocalDateTime atualizadoEm;
-    private List<Consultation> consultas = new ArrayList<>();
+    private String notes;
+    private boolean active;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private List<Consultation> consultations = new ArrayList<>();
 
     public Patient() {
-        this.ativo = true;
-        this.criadoEm = LocalDateTime.now();
-        this.atualizadoEm = LocalDateTime.now();
+        this.active = true;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
-    public Patient(String nome, String cpf, LocalDate dataNascimento, String telefone, String email) {
+    public Patient(String name, String cpf, LocalDate birthDate, String phone, String email) {
         this();
-        this.nome = nome;
+        this.name = name;
         this.cpf = cpf;
-        this.dataNascimento = dataNascimento;
-        this.telefone = telefone;
+        this.birthDate = birthDate;
+        this.phone = phone;
         this.email = email;
     }
 
-    public Patient(int id, String nome, String cpf, LocalDate dataNascimento,
-                   String telefone, String email, String observacoes,
-                   boolean ativo, LocalDateTime criadoEm, LocalDateTime atualizadoEm) {
+    public Patient(int id, String name, String cpf, LocalDate birthDate,
+                   String phone, String email, String notes,
+                   boolean active, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
-        this.nome = nome;
+        this.name = name;
         this.cpf = cpf;
-        this.dataNascimento = dataNascimento;
-        this.telefone = telefone;
+        this.birthDate = birthDate;
+        this.phone = phone;
         this.email = email;
-        this.observacoes = observacoes;
-        this.ativo = ativo;
-        this.criadoEm = criadoEm;
-        this.atualizadoEm = atualizadoEm;
+        this.notes = notes;
+        this.active = active;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
-    public int getIdade() {
-        if (dataNascimento == null) return 0;
-        return Period.between(dataNascimento, LocalDate.now()).getYears();
+    public int getAge() {
+        if (birthDate == null) return 0;
+        return Period.between(birthDate, LocalDate.now()).getYears();
     }
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
     public String getCpf() { return cpf; }
     public void setCpf(String cpf) { this.cpf = cpf; }
 
-    public LocalDate getDataNascimento() { return dataNascimento; }
-    public void setDataNascimento(LocalDate dataNascimento) { this.dataNascimento = dataNascimento; }
+    public LocalDate getBirthDate() { return birthDate; }
+    public void setBirthDate(LocalDate birthDate) { this.birthDate = birthDate; }
 
-    public String getTelefone() { return telefone; }
-    public void setTelefone(String telefone) { this.telefone = telefone; }
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getObservacoes() { return observacoes; }
-    public void setObservacoes(String observacoes) { this.observacoes = observacoes; }
+    public String getNotes() { return notes; }
+    public void setNotes(String notes) { this.notes = notes; }
 
-    public boolean isAtivo() { return ativo; }
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
-        this.atualizadoEm = LocalDateTime.now();
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) {
+        this.active = active;
+        this.updatedAt = LocalDateTime.now();
     }
 
-    public LocalDateTime getCriadoEm() { return criadoEm; }
-    public void setCriadoEm(LocalDateTime criadoEm) { this.criadoEm = criadoEm; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    public LocalDateTime getAtualizadoEm() { return atualizadoEm; }
-    public void setAtualizadoEm(LocalDateTime atualizadoEm) { this.atualizadoEm = atualizadoEm; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 
-    public List<Consultation> getConsultas() { return consultas; }
-    public void setConsultas(List<Consultation> consultas) { this.consultas = consultas; }
+    public List<Consultation> getConsultations() { return consultations; }
+    public void setConsultations(List<Consultation> consultations) { this.consultations = consultations; }
 
     @Override
     public String toString() {
-        return nome + " (CPF: " + cpf + ")";
+        return name + " (CPF: " + cpf + ")";
     }
 }

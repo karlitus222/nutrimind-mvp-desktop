@@ -3,21 +3,21 @@ package br.com.nutrimind.model;
 public enum Severity {
 
     INFO("Informativo"),
-    ATENCAO("Atenção"),
-    ALERTA("Alerta");
+    WARNING("Atenção"),
+    ALERT("Alerta");
 
-    private final String rotulo;
+    private final String label;
 
-    Severity(String rotulo) {
-        this.rotulo = rotulo;
+    Severity(String label) {
+        this.label = label;
     }
 
-    public String getRotulo() {
-        return rotulo;
+    public String getLabel() {
+        return label;
     }
 
     @Override
     public String toString() {
-        return rotulo;
+        return label;
     }
 }

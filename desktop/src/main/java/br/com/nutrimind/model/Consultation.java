@@ -5,102 +5,102 @@ import java.time.LocalDateTime;
 public class Consultation {
 
     private int id;
-    private Patient paciente;
-    private Nutritionist nutricionista;
-    private LocalDateTime agendadoEm;
-    private LocalDateTime concluidoEm;
+    private Patient patient;
+    private Nutritionist nutritionist;
+    private LocalDateTime scheduledAt;
+    private LocalDateTime completedAt;
     private ConsultationStatus status;
-    private String anamnese;
-    private String anotacoesNutricionista;
-    private double pesoKg;
-    private double alturaCm;
-    private ConsultationReport relatorio;
-    private LocalDateTime criadoEm;
-    private LocalDateTime atualizadoEm;
+    private String anamnesis;
+    private String nutritionistNotes;
+    private double weightKg;
+    private double heightCm;
+    private ConsultationReport report;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public Consultation() {
-        this.status = ConsultationStatus.AGENDADA;
-        this.criadoEm = LocalDateTime.now();
-        this.atualizadoEm = LocalDateTime.now();
+        this.status = ConsultationStatus.SCHEDULED;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
-    public Consultation(Patient paciente, Nutritionist nutricionista, LocalDateTime agendadoEm) {
+    public Consultation(Patient patient, Nutritionist nutritionist, LocalDateTime scheduledAt) {
         this();
-        this.paciente = paciente;
-        this.nutricionista = nutricionista;
-        this.agendadoEm = agendadoEm;
+        this.patient = patient;
+        this.nutritionist = nutritionist;
+        this.scheduledAt = scheduledAt;
     }
 
-    public Consultation(int id, Patient paciente, Nutritionist nutricionista,
-                        LocalDateTime agendadoEm, LocalDateTime concluidoEm,
-                        ConsultationStatus status, String anamnese,
-                        String anotacoesNutricionista, double pesoKg, double alturaCm,
-                        LocalDateTime criadoEm, LocalDateTime atualizadoEm) {
+    public Consultation(int id, Patient patient, Nutritionist nutritionist,
+                        LocalDateTime scheduledAt, LocalDateTime completedAt,
+                        ConsultationStatus status, String anamnesis,
+                        String nutritionistNotes, double weightKg, double heightCm,
+                        LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
-        this.paciente = paciente;
-        this.nutricionista = nutricionista;
-        this.agendadoEm = agendadoEm;
-        this.concluidoEm = concluidoEm;
+        this.patient = patient;
+        this.nutritionist = nutritionist;
+        this.scheduledAt = scheduledAt;
+        this.completedAt = completedAt;
         this.status = status;
-        this.anamnese = anamnese;
-        this.anotacoesNutricionista = anotacoesNutricionista;
-        this.pesoKg = pesoKg;
-        this.alturaCm = alturaCm;
-        this.criadoEm = criadoEm;
-        this.atualizadoEm = atualizadoEm;
+        this.anamnesis = anamnesis;
+        this.nutritionistNotes = nutritionistNotes;
+        this.weightKg = weightKg;
+        this.heightCm = heightCm;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public double calcularImc() {
-        if (alturaCm <= 0 || pesoKg <= 0) return 0;
-        double alturaEmMetros = alturaCm / 100.0;
-        return pesoKg / (alturaEmMetros * alturaEmMetros);
+        if (heightCm <= 0 || weightKg <= 0) return 0;
+        double alturaEmMetros = heightCm / 100.0;
+        return weightKg / (alturaEmMetros * alturaEmMetros);
     }
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    public Patient getPaciente() { return paciente; }
-    public void setPaciente(Patient paciente) { this.paciente = paciente; }
+    public Patient getPatient() { return patient; }
+    public void setPatient(Patient patient) { this.patient = patient; }
 
-    public Nutritionist getNutricionista() { return nutricionista; }
-    public void setNutricionista(Nutritionist nutricionista) { this.nutricionista = nutricionista; }
+    public Nutritionist getNutritionist() { return nutritionist; }
+    public void setNutritionist(Nutritionist nutritionist) { this.nutritionist = nutritionist; }
 
-    public LocalDateTime getAgendadoEm() { return agendadoEm; }
-    public void setAgendadoEm(LocalDateTime agendadoEm) { this.agendadoEm = agendadoEm; }
+    public LocalDateTime getScheduledAt() { return scheduledAt; }
+    public void setScheduledAt(LocalDateTime scheduledAt) { this.scheduledAt = scheduledAt; }
 
-    public LocalDateTime getConcluidoEm() { return concluidoEm; }
-    public void setConcluidoEm(LocalDateTime concluidoEm) { this.concluidoEm = concluidoEm; }
+    public LocalDateTime getCompletedAt() { return completedAt; }
+    public void setCompletedAt(LocalDateTime completedAt) { this.completedAt = completedAt; }
 
     public ConsultationStatus getStatus() { return status; }
     public void setStatus(ConsultationStatus status) {
         this.status = status;
-        this.atualizadoEm = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
-    public String getAnamnese() { return anamnese; }
-    public void setAnamnese(String anamnese) { this.anamnese = anamnese; }
+    public String getAnamnesis() { return anamnesis; }
+    public void setAnamnesis(String anamnesis) { this.anamnesis = anamnesis; }
 
-    public String getAnotacoesNutricionista() { return anotacoesNutricionista; }
-    public void setAnotacoesNutricionista(String anotacoesNutricionista) { this.anotacoesNutricionista = anotacoesNutricionista; }
+    public String getNutritionistNotes() { return nutritionistNotes; }
+    public void setNutritionistNotes(String nutritionistNotes) { this.nutritionistNotes = nutritionistNotes; }
 
-    public double getPesoKg() { return pesoKg; }
-    public void setPesoKg(double pesoKg) { this.pesoKg = pesoKg; }
+    public double getWeightKg() { return weightKg; }
+    public void setWeightKg(double weightKg) { this.weightKg = weightKg; }
 
-    public double getAlturaCm() { return alturaCm; }
-    public void setAlturaCm(double alturaCm) { this.alturaCm = alturaCm; }
+    public double getHeightCm() { return heightCm; }
+    public void setHeightCm(double heightCm) { this.heightCm = heightCm; }
 
-    public ConsultationReport getRelatorio() { return relatorio; }
-    public void setRelatorio(ConsultationReport relatorio) { this.relatorio = relatorio; }
+    public ConsultationReport getReport() { return report; }
+    public void setReport(ConsultationReport report) { this.report = report; }
 
-    public LocalDateTime getCriadoEm() { return criadoEm; }
-    public void setCriadoEm(LocalDateTime criadoEm) { this.criadoEm = criadoEm; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    public LocalDateTime getAtualizadoEm() { return atualizadoEm; }
-    public void setAtualizadoEm(LocalDateTime atualizadoEm) { this.atualizadoEm = atualizadoEm; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 
     @Override
     public String toString() {
-        String nomePaciente = paciente != null ? paciente.getNome() : "sem paciente";
+        String nomePaciente = patient != null ? patient.getName() : "sem paciente";
         return "Consulta de " + nomePaciente + " - " + status;
     }
 }

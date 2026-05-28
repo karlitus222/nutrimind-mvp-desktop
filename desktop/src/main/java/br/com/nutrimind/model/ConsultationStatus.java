@@ -2,23 +2,23 @@ package br.com.nutrimind.model;
 
 public enum ConsultationStatus {
 
-    AGENDADA("Agendada"),
-    EM_ANDAMENTO("Em andamento"),
-    CONCLUIDA("Concluída"),
-    CANCELADA("Cancelada");
+    SCHEDULED("Agendada"),
+    IN_PROGRESS("Em andamento"),
+    COMPLETED("Concluída"),
+    CANCELLED("Cancelada");
 
-    private final String rotulo;
+    private final String label;
 
-    ConsultationStatus(String rotulo) {
-        this.rotulo = rotulo;
+    ConsultationStatus(String label) {
+        this.label = label;
     }
 
-    public String getRotulo() {
-        return rotulo;
+    public String getLabel() {
+        return label;
     }
 
     @Override
     public String toString() {
-        return rotulo;
+        return label;
     }
 }

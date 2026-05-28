@@ -7,42 +7,42 @@ import java.util.List;
 public class Nutritionist extends User {
 
     private String cfn;
-    private String especialidade;
-    private List<Consultation> consultas = new ArrayList<>();
+    private String specialty;
+    private List<Consultation> consultations = new ArrayList<>();
 
     public Nutritionist() {
         super();
     }
 
-    public Nutritionist(String nome, String email, String senhaCriptografada, String cfn, String especialidade) {
-        super(nome, email, senhaCriptografada);
+    public Nutritionist(String name, String email, String passwordHash, String cfn, String specialty) {
+        super(name, email, passwordHash);
         this.cfn = cfn;
-        this.especialidade = especialidade;
+        this.specialty = specialty;
     }
 
-    public Nutritionist(int id, String nome, String email, String senhaCriptografada,
-                        boolean ativo, LocalDateTime criadoEm, String cfn, String especialidade) {
-        super(id, nome, email, senhaCriptografada, ativo, criadoEm);
+    public Nutritionist(int id, String name, String email, String passwordHash,
+                        boolean active, LocalDateTime createdAt, String cfn, String specialty) {
+        super(id, name, email, passwordHash, active, createdAt);
         this.cfn = cfn;
-        this.especialidade = especialidade;
+        this.specialty = specialty;
     }
 
     @Override
-    public String getPerfil() {
-        return "NUTRICIONISTA";
+    public String getRole() {
+        return "NUTRITIONIST";
     }
 
     @Override
-    public String getNomeExibicao() {
-        return "Nutri. " + getNome();
+    public String getDisplayName() {
+        return "Nutri. " + getName();
     }
 
     public String getCfn() { return cfn; }
     public void setCfn(String cfn) { this.cfn = cfn; }
 
-    public String getEspecialidade() { return especialidade; }
-    public void setEspecialidade(String especialidade) { this.especialidade = especialidade; }
+    public String getSpecialty() { return specialty; }
+    public void setSpecialty(String specialty) { this.specialty = specialty; }
 
-    public List<Consultation> getConsultas() { return consultas; }
-    public void setConsultas(List<Consultation> consultas) { this.consultas = consultas; }
+    public List<Consultation> getConsultations() { return consultations; }
+    public void setConsultations(List<Consultation> consultations) { this.consultations = consultations; }
 }

@@ -5,59 +5,59 @@ import java.time.LocalDateTime;
 public abstract class User {
 
     private int id;
-    private String nome;
+    private String name;
     private String email;
-    private String senhaCriptografada;
-    private boolean ativo;
-    private LocalDateTime criadoEm;
+    private String passwordHash;
+    private boolean active;
+    private LocalDateTime createdAt;
 
     public User() {
-        this.ativo = true;
-        this.criadoEm = LocalDateTime.now();
+        this.active = true;
+        this.createdAt = LocalDateTime.now();
     }
 
-    public User(String nome, String email, String senhaCriptografada) {
+    public User(String name, String email, String passwordHash) {
         this();
-        this.nome = nome;
+        this.name = name;
         this.email = email;
-        this.senhaCriptografada = senhaCriptografada;
+        this.passwordHash = passwordHash;
     }
 
-    public User(int id, String nome, String email, String senhaCriptografada, boolean ativo, LocalDateTime criadoEm) {
+    public User(int id, String name, String email, String passwordHash, boolean active, LocalDateTime createdAt) {
         this.id = id;
-        this.nome = nome;
+        this.name = name;
         this.email = email;
-        this.senhaCriptografada = senhaCriptografada;
-        this.ativo = ativo;
-        this.criadoEm = criadoEm;
+        this.passwordHash = passwordHash;
+        this.active = active;
+        this.createdAt = createdAt;
     }
 
-    public abstract String getPerfil();
+    public abstract String getRole();
 
-    public String getNomeExibicao() {
-        return nome;
+    public String getDisplayName() {
+        return name;
     }
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getSenhaCriptografada() { return senhaCriptografada; }
-    public void setSenhaCriptografada(String senhaCriptografada) { this.senhaCriptografada = senhaCriptografada; }
+    public String getPasswordHash() { return passwordHash; }
+    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
 
-    public boolean isAtivo() { return ativo; }
-    public void setAtivo(boolean ativo) { this.ativo = ativo; }
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 
-    public LocalDateTime getCriadoEm() { return criadoEm; }
-    public void setCriadoEm(LocalDateTime criadoEm) { this.criadoEm = criadoEm; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
     @Override
     public String toString() {
-        return nome + " (" + getPerfil() + ")";
+        return name + " (" + getRole() + ")";
     }
 }

@@ -7,73 +7,73 @@ import java.util.List;
 public class ConsultationReport {
 
     private int id;
-    private Consultation consulta;
-    private String resumo;
-    private String planoAlimentar;
-    private String recomendacoes;
-    private boolean apoiadoPorIa;
-    private String resumoSugeridoPelaIa;
-    private List<String> alertasDaIa = new ArrayList<>();
-    private LocalDateTime criadoEm;
-    private LocalDateTime atualizadoEm;
+    private Consultation consultation;
+    private String summary;
+    private String dietPlan;
+    private String recommendations;
+    private boolean aiAssisted;
+    private String aiSummary;
+    private List<String> aiAlerts = new ArrayList<>();
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public ConsultationReport() {
-        this.apoiadoPorIa = false;
-        this.criadoEm = LocalDateTime.now();
-        this.atualizadoEm = LocalDateTime.now();
+        this.aiAssisted = false;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
-    public ConsultationReport(Consultation consulta, String resumo,
-                               String planoAlimentar, String recomendacoes) {
+    public ConsultationReport(Consultation consultation, String summary,
+                               String dietPlan, String recommendations) {
         this();
-        this.consulta = consulta;
-        this.resumo = resumo;
-        this.planoAlimentar = planoAlimentar;
-        this.recomendacoes = recomendacoes;
+        this.consultation = consultation;
+        this.summary = summary;
+        this.dietPlan = dietPlan;
+        this.recommendations = recommendations;
     }
 
-    public ConsultationReport(int id, Consultation consulta, String resumo,
-                               String planoAlimentar, String recomendacoes,
-                               boolean apoiadoPorIa, String resumoSugeridoPelaIa,
-                               LocalDateTime criadoEm, LocalDateTime atualizadoEm) {
+    public ConsultationReport(int id, Consultation consultation, String summary,
+                               String dietPlan, String recommendations,
+                               boolean aiAssisted, String aiSummary,
+                               LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
-        this.consulta = consulta;
-        this.resumo = resumo;
-        this.planoAlimentar = planoAlimentar;
-        this.recomendacoes = recomendacoes;
-        this.apoiadoPorIa = apoiadoPorIa;
-        this.resumoSugeridoPelaIa = resumoSugeridoPelaIa;
-        this.criadoEm = criadoEm;
-        this.atualizadoEm = atualizadoEm;
+        this.consultation = consultation;
+        this.summary = summary;
+        this.dietPlan = dietPlan;
+        this.recommendations = recommendations;
+        this.aiAssisted = aiAssisted;
+        this.aiSummary = aiSummary;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    public Consultation getConsulta() { return consulta; }
-    public void setConsulta(Consultation consulta) { this.consulta = consulta; }
+    public Consultation getConsultation() { return consultation; }
+    public void setConsultation(Consultation consultation) { this.consultation = consultation; }
 
-    public String getResumo() { return resumo; }
-    public void setResumo(String resumo) { this.resumo = resumo; }
+    public String getSummary() { return summary; }
+    public void setSummary(String summary) { this.summary = summary; }
 
-    public String getPlanoAlimentar() { return planoAlimentar; }
-    public void setPlanoAlimentar(String planoAlimentar) { this.planoAlimentar = planoAlimentar; }
+    public String getDietPlan() { return dietPlan; }
+    public void setDietPlan(String dietPlan) { this.dietPlan = dietPlan; }
 
-    public String getRecomendacoes() { return recomendacoes; }
-    public void setRecomendacoes(String recomendacoes) { this.recomendacoes = recomendacoes; }
+    public String getRecommendations() { return recommendations; }
+    public void setRecommendations(String recommendations) { this.recommendations = recommendations; }
 
-    public boolean isApoiadoPorIa() { return apoiadoPorIa; }
-    public void setApoiadoPorIa(boolean apoiadoPorIa) { this.apoiadoPorIa = apoiadoPorIa; }
+    public boolean isAiAssisted() { return aiAssisted; }
+    public void setAiAssisted(boolean aiAssisted) { this.aiAssisted = aiAssisted; }
 
-    public String getResumoSugeridoPelaIa() { return resumoSugeridoPelaIa; }
-    public void setResumoSugeridoPelaIa(String resumoSugeridoPelaIa) { this.resumoSugeridoPelaIa = resumoSugeridoPelaIa; }
+    public String getAiSummary() { return aiSummary; }
+    public void setAiSummary(String aiSummary) { this.aiSummary = aiSummary; }
 
-    public List<String> getAlertasDaIa() { return alertasDaIa; }
-    public void setAlertasDaIa(List<String> alertasDaIa) { this.alertasDaIa = alertasDaIa; }
+    public List<String> getAiAlerts() { return aiAlerts; }
+    public void setAiAlerts(List<String> aiAlerts) { this.aiAlerts = aiAlerts; }
 
-    public LocalDateTime getCriadoEm() { return criadoEm; }
-    public void setCriadoEm(LocalDateTime criadoEm) { this.criadoEm = criadoEm; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    public LocalDateTime getAtualizadoEm() { return atualizadoEm; }
-    public void setAtualizadoEm(LocalDateTime atualizadoEm) { this.atualizadoEm = atualizadoEm; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 }
