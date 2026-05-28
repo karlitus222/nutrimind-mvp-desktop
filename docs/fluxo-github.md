@@ -16,6 +16,19 @@ Este guia é para trabalhar pela interface gráfica.
 - `pessoa6-controllers-fluxo`
 - `pessoa7-ia-testes-docs`
 
+## Ordem recomendada
+
+1. **Etapa 1A - Pessoa 2:** banco de dados, SQL, DER e inicialização.
+2. **Etapa 1B - Pessoa 3:** models e pilares de POO.
+3. **Etapa 2 - Pessoa 1:** login, aplicação principal e README.
+4. **Etapa 3 - Pessoa 4:** DAO, Singleton e CRUDs.
+5. **Etapa 4 - Pessoa 6:** controllers e fluxo de consulta.
+6. **Etapa 5 - Pessoa 5:** telas Swing e usabilidade.
+7. **Etapa 6 - Pessoa 7:** IA assistiva, testes e documentação.
+8. **Etapa 7 - Todos:** revisão final, correções e apresentação.
+
+Pessoa 2 e Pessoa 3 ficam primeiro porque quase todas as outras partes dependem do banco e das classes principais.
+
 ## Abrir a pasta do projeto
 
 1. Abra o GitHub Desktop.
