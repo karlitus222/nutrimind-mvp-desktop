@@ -1,0 +1,14 @@
+build/
+lib/
+web/
+demo/
+desktop/data/nutrimind.db
+desktop/data/media/
+desktop/data/exports/
+desktop/out/
+web/node_modules/
+web/dist/
+.env
+.env.local
+*.log
+*.class
