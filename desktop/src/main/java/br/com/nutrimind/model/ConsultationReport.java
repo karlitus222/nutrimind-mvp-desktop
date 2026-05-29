@@ -1,79 +1,60 @@
 package br.com.nutrimind.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ConsultationReport {
 
-    private int id;
-    private Consultation consultation;
-    private String summary;
-    private String dietPlan;
-    private String recommendations;
-    private boolean aiAssisted;
-    private String aiSummary;
-    private List<String> aiAlerts = new ArrayList<>();
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private long id;
+    private long consultationId;
+    private String identificationSection;
+    private String clinicalSection;
+    private String recommendationsSection;
+    private String limitationsSection;
+    private LocalDateTime generatedAt;
 
     public ConsultationReport() {
-        this.aiAssisted = false;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        this.generatedAt = LocalDateTime.now();
     }
 
-    public ConsultationReport(Consultation consultation, String summary,
-                               String dietPlan, String recommendations) {
+    public ConsultationReport(long consultationId, String identificationSection, String clinicalSection,
+                               String recommendationsSection, String limitationsSection) {
         this();
-        this.consultation = consultation;
-        this.summary = summary;
-        this.dietPlan = dietPlan;
-        this.recommendations = recommendations;
+        this.consultationId = consultationId;
+        this.identificationSection = identificationSection;
+        this.clinicalSection = clinicalSection;
+        this.recommendationsSection = recommendationsSection;
+        this.limitationsSection = limitationsSection;
     }
 
-    public ConsultationReport(int id, Consultation consultation, String summary,
-                               String dietPlan, String recommendations,
-                               boolean aiAssisted, String aiSummary,
-                               LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public ConsultationReport(long id, long consultationId, String identificationSection, String clinicalSection,
+                               String recommendationsSection, String limitationsSection, LocalDateTime generatedAt) {
         this.id = id;
-        this.consultation = consultation;
-        this.summary = summary;
-        this.dietPlan = dietPlan;
-        this.recommendations = recommendations;
-        this.aiAssisted = aiAssisted;
-        this.aiSummary = aiSummary;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.consultationId = consultationId;
+        this.identificationSection = identificationSection;
+        this.clinicalSection = clinicalSection;
+        this.recommendationsSection = recommendationsSection;
+        this.limitationsSection = limitationsSection;
+        this.generatedAt = generatedAt;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
 
-    public Consultation getConsultation() { return consultation; }
-    public void setConsultation(Consultation consultation) { this.consultation = consultation; }
+    public long getConsultationId() { return consultationId; }
+    public void setConsultationId(long consultationId) { this.consultationId = consultationId; }
 
-    public String getSummary() { return summary; }
-    public void setSummary(String summary) { this.summary = summary; }
+    public String getIdentificationSection() { return identificationSection; }
+    public void setIdentificationSection(String identificationSection) { this.identificationSection = identificationSection; }
 
-    public String getDietPlan() { return dietPlan; }
-    public void setDietPlan(String dietPlan) { this.dietPlan = dietPlan; }
+    public String getClinicalSection() { return clinicalSection; }
+    public void setClinicalSection(String clinicalSection) { this.clinicalSection = clinicalSection; }
 
-    public String getRecommendations() { return recommendations; }
-    public void setRecommendations(String recommendations) { this.recommendations = recommendations; }
+    public String getRecommendationsSection() { return recommendationsSection; }
+    public void setRecommendationsSection(String recommendationsSection) { this.recommendationsSection = recommendationsSection; }
 
-    public boolean isAiAssisted() { return aiAssisted; }
-    public void setAiAssisted(boolean aiAssisted) { this.aiAssisted = aiAssisted; }
+    public String getLimitationsSection() { return limitationsSection; }
+    public void setLimitationsSection(String limitationsSection) { this.limitationsSection = limitationsSection; }
 
-    public String getAiSummary() { return aiSummary; }
-    public void setAiSummary(String aiSummary) { this.aiSummary = aiSummary; }
-
-    public List<String> getAiAlerts() { return aiAlerts; }
-    public void setAiAlerts(List<String> aiAlerts) { this.aiAlerts = aiAlerts; }
-
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+    public LocalDateTime getGeneratedAt() { return generatedAt; }
+    public void setGeneratedAt(LocalDateTime generatedAt) { this.generatedAt = generatedAt; }
 }

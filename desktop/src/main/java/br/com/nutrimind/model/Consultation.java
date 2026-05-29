@@ -4,103 +4,81 @@ import java.time.LocalDateTime;
 
 public class Consultation {
 
-    private int id;
-    private Patient patient;
-    private Nutritionist nutritionist;
-    private LocalDateTime scheduledAt;
-    private LocalDateTime completedAt;
+    private long id;
+    private long patientId;
+    private long nutritionistId;
+    private LocalDateTime startedAt;
+    private LocalDateTime endedAt;
     private ConsultationStatus status;
-    private String anamnesis;
-    private String nutritionistNotes;
-    private double weightKg;
-    private double heightCm;
-    private ConsultationReport report;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private boolean consentAudio;
+    private boolean consentVideo;
+    private String clinicalNotes;
+    private String transcript;
+    private String visualObservations;
 
     public Consultation() {
-        this.status = ConsultationStatus.SCHEDULED;
-        this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        this.status = ConsultationStatus.EM_ANDAMENTO;
     }
 
-    public Consultation(Patient patient, Nutritionist nutritionist, LocalDateTime scheduledAt) {
+    public Consultation(long patientId, long nutritionistId, LocalDateTime startedAt) {
         this();
-        this.patient = patient;
-        this.nutritionist = nutritionist;
-        this.scheduledAt = scheduledAt;
+        this.patientId = patientId;
+        this.nutritionistId = nutritionistId;
+        this.startedAt = startedAt;
     }
 
-    public Consultation(int id, Patient patient, Nutritionist nutritionist,
-                        LocalDateTime scheduledAt, LocalDateTime completedAt,
-                        ConsultationStatus status, String anamnesis,
-                        String nutritionistNotes, double weightKg, double heightCm,
-                        LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Consultation(long id, long patientId, long nutritionistId,
+                        LocalDateTime startedAt, LocalDateTime endedAt,
+                        ConsultationStatus status, boolean consentAudio, boolean consentVideo,
+                        String clinicalNotes, String transcript, String visualObservations) {
         this.id = id;
-        this.patient = patient;
-        this.nutritionist = nutritionist;
-        this.scheduledAt = scheduledAt;
-        this.completedAt = completedAt;
+        this.patientId = patientId;
+        this.nutritionistId = nutritionistId;
+        this.startedAt = startedAt;
+        this.endedAt = endedAt;
         this.status = status;
-        this.anamnesis = anamnesis;
-        this.nutritionistNotes = nutritionistNotes;
-        this.weightKg = weightKg;
-        this.heightCm = heightCm;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.consentAudio = consentAudio;
+        this.consentVideo = consentVideo;
+        this.clinicalNotes = clinicalNotes;
+        this.transcript = transcript;
+        this.visualObservations = visualObservations;
     }
 
-    public double calcularImc() {
-        if (heightCm <= 0 || weightKg <= 0) return 0;
-        double alturaEmMetros = heightCm / 100.0;
-        return weightKg / (alturaEmMetros * alturaEmMetros);
-    }
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public long getPatientId() { return patientId; }
+    public void setPatientId(long patientId) { this.patientId = patientId; }
 
-    public Patient getPatient() { return patient; }
-    public void setPatient(Patient patient) { this.patient = patient; }
+    public long getNutritionistId() { return nutritionistId; }
+    public void setNutritionistId(long nutritionistId) { this.nutritionistId = nutritionistId; }
 
-    public Nutritionist getNutritionist() { return nutritionist; }
-    public void setNutritionist(Nutritionist nutritionist) { this.nutritionist = nutritionist; }
+    public LocalDateTime getStartedAt() { return startedAt; }
+    public void setStartedAt(LocalDateTime startedAt) { this.startedAt = startedAt; }
 
-    public LocalDateTime getScheduledAt() { return scheduledAt; }
-    public void setScheduledAt(LocalDateTime scheduledAt) { this.scheduledAt = scheduledAt; }
-
-    public LocalDateTime getCompletedAt() { return completedAt; }
-    public void setCompletedAt(LocalDateTime completedAt) { this.completedAt = completedAt; }
+    public LocalDateTime getEndedAt() { return endedAt; }
+    public void setEndedAt(LocalDateTime endedAt) { this.endedAt = endedAt; }
 
     public ConsultationStatus getStatus() { return status; }
-    public void setStatus(ConsultationStatus status) {
-        this.status = status;
-        this.updatedAt = LocalDateTime.now();
-    }
+    public void setStatus(ConsultationStatus status) { this.status = status; }
 
-    public String getAnamnesis() { return anamnesis; }
-    public void setAnamnesis(String anamnesis) { this.anamnesis = anamnesis; }
+    public boolean hasConsentAudio() { return consentAudio; }
+    public void setConsentAudio(boolean consentAudio) { this.consentAudio = consentAudio; }
 
-    public String getNutritionistNotes() { return nutritionistNotes; }
-    public void setNutritionistNotes(String nutritionistNotes) { this.nutritionistNotes = nutritionistNotes; }
+    public boolean hasConsentVideo() { return consentVideo; }
+    public void setConsentVideo(boolean consentVideo) { this.consentVideo = consentVideo; }
 
-    public double getWeightKg() { return weightKg; }
-    public void setWeightKg(double weightKg) { this.weightKg = weightKg; }
+    public String getClinicalNotes() { return clinicalNotes; }
+    public void setClinicalNotes(String clinicalNotes) { this.clinicalNotes = clinicalNotes; }
 
-    public double getHeightCm() { return heightCm; }
-    public void setHeightCm(double heightCm) { this.heightCm = heightCm; }
+    public String getTranscript() { return transcript; }
+    public void setTranscript(String transcript) { this.transcript = transcript; }
 
-    public ConsultationReport getReport() { return report; }
-    public void setReport(ConsultationReport report) { this.report = report; }
-
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+    public String getVisualObservations() { return visualObservations; }
+    public void setVisualObservations(String visualObservations) { this.visualObservations = visualObservations; }
 
     @Override
     public String toString() {
-        String nomePaciente = patient != null ? patient.getName() : "sem paciente";
-        return "Consulta de " + nomePaciente + " - " + status;
+        return "Consulta #" + id + " - " + status;
     }
 }

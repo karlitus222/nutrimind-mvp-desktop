@@ -8,22 +8,22 @@ import java.util.List;
 
 public class Patient {
 
-    private int id;
+    private long id;
+    private long nutritionistId;
     private String name;
     private String cpf;
     private LocalDate birthDate;
     private String phone;
     private String email;
-    private String notes;
+    private String clinicalNotes;
+    private String eatingHistory;
     private boolean active;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
     private List<Consultation> consultations = new ArrayList<>();
 
     public Patient() {
         this.active = true;
         this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
     }
 
     public Patient(String name, String cpf, LocalDate birthDate, String phone, String email) {
@@ -35,19 +35,20 @@ public class Patient {
         this.email = email;
     }
 
-    public Patient(int id, String name, String cpf, LocalDate birthDate,
-                   String phone, String email, String notes,
-                   boolean active, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Patient(long id, long nutritionistId, String name, String cpf, LocalDate birthDate,
+                   String phone, String email, String clinicalNotes, String eatingHistory,
+                   boolean active, LocalDateTime createdAt) {
         this.id = id;
+        this.nutritionistId = nutritionistId;
         this.name = name;
         this.cpf = cpf;
         this.birthDate = birthDate;
         this.phone = phone;
         this.email = email;
-        this.notes = notes;
+        this.clinicalNotes = clinicalNotes;
+        this.eatingHistory = eatingHistory;
         this.active = active;
         this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public int getAge() {
@@ -55,8 +56,11 @@ public class Patient {
         return Period.between(birthDate, LocalDate.now()).getYears();
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
+
+    public long getNutritionistId() { return nutritionistId; }
+    public void setNutritionistId(long nutritionistId) { this.nutritionistId = nutritionistId; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
@@ -73,20 +77,17 @@ public class Patient {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getNotes() { return notes; }
-    public void setNotes(String notes) { this.notes = notes; }
+    public String getClinicalNotes() { return clinicalNotes; }
+    public void setClinicalNotes(String clinicalNotes) { this.clinicalNotes = clinicalNotes; }
+
+    public String getEatingHistory() { return eatingHistory; }
+    public void setEatingHistory(String eatingHistory) { this.eatingHistory = eatingHistory; }
 
     public boolean isActive() { return active; }
-    public void setActive(boolean active) {
-        this.active = active;
-        this.updatedAt = LocalDateTime.now();
-    }
+    public void setActive(boolean active) { this.active = active; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
-
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 
     public List<Consultation> getConsultations() { return consultations; }
     public void setConsultations(List<Consultation> consultations) { this.consultations = consultations; }

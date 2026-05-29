@@ -2,10 +2,9 @@ package br.com.nutrimind.model;
 
 public enum ConsultationStatus {
 
-    SCHEDULED("Agendada"),
-    IN_PROGRESS("Em andamento"),
-    COMPLETED("Concluída"),
-    CANCELLED("Cancelada");
+    EM_ANDAMENTO("Em andamento"),
+    ENCERRADA("Encerrada"),
+    CANCELADA("Cancelada");
 
     private final String label;
 

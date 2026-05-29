@@ -2,9 +2,9 @@ package br.com.nutrimind.model;
 
 public enum Severity {
 
-    INFO("Informativo"),
-    WARNING("Atenção"),
-    ALERT("Alerta");
+    LEVE("Leve"),
+    MODERADO("Moderado"),
+    GRAVE("Grave");
 
     private final String label;
 
