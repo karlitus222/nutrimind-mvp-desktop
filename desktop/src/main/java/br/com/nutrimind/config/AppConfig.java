@@ -10,7 +10,7 @@ public final class AppConfig {
     public static final Path EXPORT_DIR = DATA_DIR.resolve("exports");
     public static final String DB_URL = "jdbc:sqlite:" + DATA_DIR.resolve("nutrimind.db").toString();
     public static final String OPENAI_API_KEY = System.getenv("OPENAI_API_KEY");
-    public static final String OPENAI_ANALYSIS_MODEL = getenv("OPENAI_ANALYSIS_MODEL", "gpt-5.4-mini");
+    public static final String OPENAI_ANALYSIS_MODEL = getenv("OPENAI_ANALYSIS_MODEL", "gpt-5-mini");
     public static final String OPENAI_TRANSCRIPTION_MODEL = getenv("OPENAI_TRANSCRIPTION_MODEL", "gpt-4o-mini-transcribe");
 
     private AppConfig() {

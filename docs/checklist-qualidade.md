@@ -8,6 +8,7 @@
 - [x] SQLite com PK/FK.
 - [x] CRUD de pacientes.
 - [x] CRUD/cadastro administrativo de usuários nutricionistas.
+- [x] Perfis separados para nutricionista e administrador.
 - [x] Consultas relacionadas a pacientes e nutricionistas.
 - [x] Consentimento de áudio/vídeo.
 - [x] Captura de áudio em `.wav`.
@@ -19,6 +20,7 @@
 - [x] Registro de decisão frente a alertas.
 - [x] Relatório final em três partes.
 - [x] Plano alimentar em revisão.
+- [x] Aprovação profissional do plano alimentar.
 - [x] Dados de demonstração.
 - [x] README com instruções.
 - [x] DER lógico.

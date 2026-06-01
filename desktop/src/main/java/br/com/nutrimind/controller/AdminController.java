@@ -37,6 +37,10 @@ public class AdminController {
         return userDao.createNutritionist(name, email, password, crn, specialty);
     }
 
+    public void deactivateUser(long userId) {
+        userDao.delete(userId);
+    }
+
     public Map<String, Integer> dashboardCounts() {
         return statsDao.dashboardCounts();
     }
@@ -53,4 +57,3 @@ public class AdminController {
         return exportService.export();
     }
 }
-

@@ -50,9 +50,13 @@ public class AppController {
 
     public ConsultationController consultationController() {
         ConsultationWorkflowService workflow = new ConsultationWorkflowService(consultationDao, mediaSessionDao,
-                analysisDao, alertDao, reportDao, mealPlanDao, auditLogDao, transcriptionService, aiAnalysisService,
-                localRiskHeuristics);
+                analysisDao, alertDao, reportDao, mealPlanDao, auditLogDao, openAiClient::ensureConfigured,
+                transcriptionService, aiAnalysisService, localRiskHeuristics);
         return new ConsultationController(workflow, consultationDao, alertDao, reportDao, audioRecorderService);
+    }
+
+    public MealPlanController mealPlanController() {
+        return new MealPlanController(mealPlanDao);
     }
 
     public AdminController adminController() {
@@ -69,4 +73,3 @@ public class AppController {
         this.currentUser = currentUser;
     }
 }
-

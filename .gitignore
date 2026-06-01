@@ -6,6 +6,8 @@ desktop/data/nutrimind.db
 desktop/data/media/
 desktop/data/exports/
 desktop/out/
+desktop/out-test/
+desktop/out-test-runtime/
 web/node_modules/
 web/dist/
 .env

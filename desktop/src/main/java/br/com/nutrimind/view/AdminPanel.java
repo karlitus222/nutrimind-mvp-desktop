@@ -52,6 +52,7 @@ public class AdminPanel extends JPanel {
     private JPanel form() {
         JPanel form = UiUtil.card(new JPanel(new GridBagLayout()));
         JButton create = UiUtil.primaryButton("Cadastrar nutricionista");
+        JButton deactivate = UiUtil.secondaryButton("Desativar usuário selecionado");
         JButton export = UiUtil.secondaryButton("Exportar dados JSON");
         form.add(aiStatus, UiUtil.gbc(0, 0));
         form.add(new JLabel("Nome"), UiUtil.gbc(0, 1));
@@ -65,8 +66,10 @@ public class AdminPanel extends JPanel {
         form.add(new JLabel("Especialidade"), UiUtil.gbc(0, 9));
         form.add(specialty, UiUtil.gbc(0, 10));
         form.add(create, UiUtil.gbc(0, 11));
-        form.add(export, UiUtil.gbc(0, 12));
+        form.add(deactivate, UiUtil.gbc(0, 12));
+        form.add(export, UiUtil.gbc(0, 13));
         create.addActionListener(event -> createNutritionist());
+        deactivate.addActionListener(event -> deactivateSelectedUser());
         export.addActionListener(event -> exportJson());
         return form;
     }
@@ -101,6 +104,20 @@ public class AdminPanel extends JPanel {
         try {
             Path file = controller.adminController().exportJson();
             javax.swing.JOptionPane.showMessageDialog(this, "Exportado para: " + file.toAbsolutePath());
+        } catch (Exception e) {
+            UiUtil.showError(this, e);
+        }
+    }
+
+    private void deactivateSelectedUser() {
+        int row = usersTable.getSelectedRow();
+        if (row < 0) {
+            return;
+        }
+        try {
+            long userId = Long.parseLong(usersModel.getValueAt(row, 0).toString());
+            controller.adminController().deactivateUser(userId);
+            reload();
         } catch (Exception e) {
             UiUtil.showError(this, e);
         }

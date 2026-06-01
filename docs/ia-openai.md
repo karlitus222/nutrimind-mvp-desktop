@@ -18,7 +18,7 @@ Variáveis:
 ```powershell
 $env:OPENAI_API_KEY="sua-chave"
 $env:OPENAI_TRANSCRIPTION_MODEL="gpt-4o-mini-transcribe"
-$env:OPENAI_ANALYSIS_MODEL="gpt-5.4-mini"
+$env:OPENAI_ANALYSIS_MODEL="gpt-5-mini"
 ```
 
 Regras do sistema:
@@ -35,4 +35,3 @@ Referências oficiais:
 - https://platform.openai.com/docs/guides/speech-to-text
 - https://platform.openai.com/docs/guides/structured-outputs
 - https://platform.openai.com/docs/models
-

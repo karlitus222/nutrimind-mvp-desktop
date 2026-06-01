@@ -39,7 +39,7 @@ $env:OPENAI_API_KEY="sua-chave"
 Modelos configuráveis:
 
 - `OPENAI_TRANSCRIPTION_MODEL`: padrão `gpt-4o-mini-transcribe`
-- `OPENAI_ANALYSIS_MODEL`: padrão `gpt-5.4-mini`
+- `OPENAI_ANALYSIS_MODEL`: padrão `gpt-5-mini`
 
 Sem chave configurada, o sistema deve apresentar mensagem clara e manter os demais cadastros disponíveis.
 
@@ -65,7 +65,8 @@ Credenciais de demonstração:
 3. Registra consentimento, notas clínicas e transcrição manual ou áudio.
 4. Encerra a consulta e solicita apoio da IA, se configurado.
 5. O sistema salva resumo, alertas, relatório e plano em revisão.
-6. O nutricionista revisa tudo antes de considerar qualquer decisão.
+6. O nutricionista registra decisões frente aos alertas.
+7. O nutricionista revisa e aprova o plano alimentar antes de utilizá-lo.
 
 ## Organização no GitHub
 

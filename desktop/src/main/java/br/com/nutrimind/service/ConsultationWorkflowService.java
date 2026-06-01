@@ -1,6 +1,5 @@
 package br.com.nutrimind.service;
 
-import br.com.nutrimind.config.AppConfig;
 import br.com.nutrimind.dao.AlertDao;
 import br.com.nutrimind.dao.AnalysisDao;
 import br.com.nutrimind.dao.AuditLogDao;
@@ -35,14 +34,15 @@ public class ConsultationWorkflowService {
     private final ReportDao reportDao;
     private final MealPlanDao mealPlanDao;
     private final AuditLogDao auditLogDao;
-    private final OpenAiTranscriptionService transcriptionService;
+    private final AiConfigurationGate configurationGate;
+    private final TranscriptionService transcriptionService;
     private final AiAnalysisService analysisService;
     private final LocalRiskHeuristics localRiskHeuristics;
 
     public ConsultationWorkflowService(ConsultationDao consultationDao, MediaSessionDao mediaSessionDao,
                                        AnalysisDao analysisDao, AlertDao alertDao, ReportDao reportDao,
                                        MealPlanDao mealPlanDao, AuditLogDao auditLogDao,
-                                       OpenAiTranscriptionService transcriptionService,
+                                       AiConfigurationGate configurationGate, TranscriptionService transcriptionService,
                                        AiAnalysisService analysisService, LocalRiskHeuristics localRiskHeuristics) {
         this.consultationDao = consultationDao;
         this.mediaSessionDao = mediaSessionDao;
@@ -51,6 +51,7 @@ public class ConsultationWorkflowService {
         this.reportDao = reportDao;
         this.mealPlanDao = mealPlanDao;
         this.auditLogDao = auditLogDao;
+        this.configurationGate = configurationGate;
         this.transcriptionService = transcriptionService;
         this.analysisService = analysisService;
         this.localRiskHeuristics = localRiskHeuristics;
@@ -59,9 +60,7 @@ public class ConsultationWorkflowService {
     public ConsultationResult runConsultation(Patient patient, User nutritionist, boolean consentAudio, boolean consentVideo,
                                               String clinicalNotes, String manualTranscript, String visualObservations,
                                               Path audioPath, Integer audioDuration, Path videoPath) {
-        if (!AppConfig.hasOpenAiKey()) {
-            throw new AppException("A análise é obrigatoriamente feita por IA. Configure OPENAI_API_KEY antes de encerrar a consulta.");
-        }
+        configurationGate.ensureConfigured();
         String transcript = manualTranscript == null ? "" : manualTranscript.trim();
         Consultation draft = new Consultation(0, patient.getId(), nutritionist.getId(), LocalDateTime.now(), null,
                 ConsultationStatus.EM_ANDAMENTO, consentAudio, consentVideo, clinicalNotes, transcript, visualObservations);
@@ -142,4 +141,3 @@ public class ConsultationWorkflowService {
         return manual + "\n\nTranscrição automática:\n" + fromAudio;
     }
 }
-

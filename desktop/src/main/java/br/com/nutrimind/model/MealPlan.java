@@ -33,6 +33,10 @@ public class MealPlan {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public long getPatientId() {
         return patientId;
     }
@@ -69,4 +73,3 @@ public class MealPlan {
         return approvedAt;
     }
 }
-
