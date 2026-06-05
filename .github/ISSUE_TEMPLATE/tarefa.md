@@ -6,24 +6,25 @@ labels: tarefa
 assignees: ''
 ---
 
-## Responsável
+## Responsavel
 
 Pessoa X
 
 ## Objetivo
 
-Descreva a parte do MVP que será feita.
+Descreva a parte do MVP desktop que sera feita.
 
 ## Arquivos principais
 
 - 
 
-## Critérios de conclusão
+## Criterios de conclusao
 
-- [ ] Código/documentação criado ou ajustado
+- [ ] Codigo/documentacao criado ou ajustado
 - [ ] Commit feito na branch da pessoa
 - [ ] Pull Request aberto
 - [ ] PR revisado antes de entrar na `main`
+- [ ] Teste ou compilacao executado
 
 ## Teste
 
