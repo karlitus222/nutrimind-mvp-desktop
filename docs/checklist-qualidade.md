@@ -27,3 +27,17 @@
 - [x] Diagrama de componentes.
 - [x] Diagrama de implantação.
 - [x] Scripts de compilação e execução.
+
+## Checklist Web/Supabase
+
+- [x] Aplicacao web publicada na Vercel.
+- [x] Supabase Auth configurado para login real.
+- [x] PostgreSQL Supabase com RLS ativo.
+- [x] Edge Function `analyze-consultation` publicada com JWT obrigatorio.
+- [x] Gemini API configurada como provedor de apresentacao.
+- [x] OpenAI mantida como fallback pago.
+- [x] Gravacao de audio pelo navegador com consentimento obrigatorio.
+- [x] Audio bruto nao persistido no banco pelo fluxo principal.
+- [x] Login de apresentacao criado.
+- [x] Roteiro de apresentacao documentado.
+- [x] Teste final documentado.

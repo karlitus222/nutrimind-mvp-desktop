@@ -1,6 +1,5 @@
 build/
-lib/
-web/
+/lib/
 demo/
 desktop/data/nutrimind.db
 desktop/data/media/
@@ -10,7 +9,11 @@ desktop/out-test/
 desktop/out-test-runtime/
 web/node_modules/
 web/dist/
+web/.env
+web/.env.local
 .env
 .env.local
 *.log
 *.class
+
+.vercel
