@@ -39,5 +39,4 @@
 - [x] Gravacao de audio pelo navegador com consentimento obrigatorio.
 - [x] Audio bruto nao persistido no banco pelo fluxo principal.
 - [x] Login de apresentacao criado.
-- [x] Roteiro de apresentacao documentado.
 - [x] Teste final documentado.

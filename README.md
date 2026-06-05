@@ -129,7 +129,6 @@ Ninguém deve trabalhar direto na `main`. Cada integrante abre um Pull Request c
 - [Diagrama de implantação](docs/diagrama-implantacao.md)
 - [Checklist de qualidade](docs/checklist-qualidade.md)
 - [Cuidados com IA](docs/ia-openai.md)
-- [Roteiro de apresentacao](docs/roteiro-apresentacao.md)
 - [Teste final](docs/teste-final.md)
 
 ## Aviso Ético
