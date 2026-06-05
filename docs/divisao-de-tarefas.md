@@ -1,54 +1,46 @@
-# Plano de Desenvolvimento e Divisão de Responsabilidades - Nutrimind MVP Desktop
+# Plano de Desenvolvimento e Divisao de Responsabilidades - Nutrimind
 
 ## Objetivo da Entrega
 
-O grupo desenvolverá um único sistema: **Nutrimind Desktop**, em Java 17 com Swing e SQLite. O MVP deverá permitir cadastrar pacientes, registrar consultas nutricionais, consultar histórico e utilizar IA como apoio opcional para resumir informações e destacar pontos de atenção que serão revisados pelo nutricionista.
+O grupo entregara o **Nutrimind Desktop**, um aplicativo Java 17 + Swing + SQLite com arquitetura MVC, DAOs, Singleton de conexao, CRUDs, consultas relacionadas a pacientes e IA assistiva obrigatoria no fluxo de analise.
 
-Esta divisão de responsabilidades orienta a construção do projeto conforme os requisitos do documento **II InterConnect Evolution - Prototipagem Técnica (MVP)**:
+A versao web React/Vite publicada na Vercel sera mantida como apoio visual para o pitch e testes pelo celular, mas a entrega principal avaliada pelo requisito tecnico sera o desktop.
 
-- interface gráfica desktop em Java Swing;
-- CRUD completo de pelo menos duas entidades relacionadas;
-- arquitetura MVC;
-- DER lógico e script SQL com PK/FK;
-- demonstração dos pilares de POO;
-- padrões DAO e Singleton;
-- `README.md`, diagramas, checklist de qualidade e instruções de execução;
-- participação comprovada por commits individuais no GitHub.
-
-## Escopo do MVP
+## Escopo do Desktop
 
 Entram na entrega:
 
 - login demonstrativo;
-- cadastro, edição, listagem e inativação de pacientes;
-- cadastro e histórico de consultas vinculadas aos pacientes;
-- relatório da consulta;
-- apoio por IA para resumo e alertas, quando houver chave configurada;
-- banco SQLite, documentação e testes de validação.
+- perfis de nutricionista e administrador;
+- cadastro, edicao, listagem e inativacao de pacientes;
+- cadastro administrativo de nutricionistas;
+- consultas vinculadas aos pacientes;
+- consentimento de audio/video;
+- gravacao de audio e transcricao por IA;
+- analise por IA com Gemini principal e OpenAI fallback;
+- alertas, decisoes clinicas, relatorio e plano alimentar;
+- SQLite com PK/FK;
+- documentacao tecnica e testes.
 
-Não entram na entrega:
+Nao entram na entrega:
 
-- sistema web separado;
-- pagamentos ou assinaturas;
-- diagnóstico automático;
-- prescrição automática sem revisão profissional;
-- funcionalidades comerciais além do necessário para demonstrar o MVP.
+- pagamentos reais;
+- diagnostico automatico;
+- prescricao sem revisao profissional;
+- obrigacao de usar o web como sistema principal.
 
-## Divisão por Integrante
+## Divisao por Integrante
 
-### Pessoa 1 - Integração, autenticação e entrega
+### Pessoa 1 - Integracao, autenticacao e README
 
-**Responsabilidade principal:** implementar a integração principal, autenticação e organização da entrega no GitHub.
+Responsavel por:
 
-**Atividades:**
+- fluxo de login;
+- integracao do aplicativo;
+- README final;
+- organizacao da entrega no GitHub.
 
-- desenvolver o fluxo de login e perfis de usuário;
-- integrar as telas ao fluxo principal do aplicativo;
-- organizar o `README.md` final com descrição, integrantes e execução;
-- revisar a integração das partes do grupo;
-- preparar a versão final submetida no AVA.
-
-**Arquivos sob responsabilidade:**
+Arquivos principais:
 
 - `desktop/src/main/java/br/com/nutrimind/App.java`
 - `desktop/src/main/java/br/com/nutrimind/controller/AppController.java`
@@ -56,46 +48,33 @@ Não entram na entrega:
 - `desktop/src/main/java/br/com/nutrimind/view/LoginPanel.java`
 - `README.md`
 
-**Evidência para avaliação:** aplicação iniciando corretamente, login funcional e README completo.
-
-**Commit sugerido:** `feat: integrar login e inicializacao do aplicativo desktop`
-
 ### Pessoa 2 - Banco de dados e DER
 
-**Responsabilidade principal:** modelar e implementar a persistência relacional do MVP.
+Responsavel por:
 
-**Atividades:**
+- modelagem relacional;
+- script SQL;
+- DER logico;
+- dados iniciais de demonstracao.
 
-- definir entidades principais, relacionamentos, chaves primárias e estrangeiras;
-- criar o script SQL de criação do banco;
-- documentar o DER lógico;
-- preparar dados iniciais suficientes para demonstração;
-- validar os relacionamentos entre paciente, consulta, usuário e relatório.
-
-**Arquivos sob responsabilidade:**
+Arquivos principais:
 
 - `desktop/sql/schema.sql`
 - `desktop/src/main/java/br/com/nutrimind/config/Database.java`
 - `desktop/src/main/java/br/com/nutrimind/config/DatabaseInitializer.java`
 - `docs/DER.md`
 
-**Evidência para avaliação:** DER coerente com o SQL e banco SQLite criado com PK/FK corretas.
+### Pessoa 3 - Modelos e POO
 
-**Commit sugerido:** `feat: modelar banco sqlite e documentar der logico`
+Responsavel por:
 
-### Pessoa 3 - Modelos e pilares de POO
+- classes de dominio;
+- encapsulamento;
+- heranca;
+- enums;
+- colecoes/generics quando aplicavel.
 
-**Responsabilidade principal:** demonstrar claramente os conceitos de Programação Orientada a Objetos cobrados no PDF.
-
-**Atividades:**
-
-- criar e organizar classes de domínio, atributos privados, construtores e métodos;
-- implementar herança entre usuários do sistema, quando aplicável;
-- demonstrar sobrescrita, interfaces e uso de coleções/generics;
-- revisar enums de status e severidade;
-- documentar apenas lógicas que realmente necessitem explicação.
-
-**Arquivos sob responsabilidade:**
+Arquivos principais:
 
 - `desktop/src/main/java/br/com/nutrimind/model/User.java`
 - `desktop/src/main/java/br/com/nutrimind/model/Nutritionist.java`
@@ -103,26 +82,17 @@ Não entram na entrega:
 - `desktop/src/main/java/br/com/nutrimind/model/Patient.java`
 - `desktop/src/main/java/br/com/nutrimind/model/Consultation.java`
 - `desktop/src/main/java/br/com/nutrimind/model/ConsultationReport.java`
-- `desktop/src/main/java/br/com/nutrimind/model/Severity.java`
-- `desktop/src/main/java/br/com/nutrimind/model/ConsultationStatus.java`
-
-**Evidência para avaliação:** classes encapsuladas e exemplos identificáveis de herança, interfaces, sobrescrita, coleções e generics.
-
-**Commit sugerido:** `feat: criar modelos e conceitos de poo do mvp`
 
 ### Pessoa 4 - DAO, Singleton e CRUD
 
-**Responsabilidade principal:** implementar o acesso aos dados seguindo os padrões exigidos.
+Responsavel por:
 
-**Atividades:**
+- interface generica de CRUD;
+- DAOs de pacientes, consultas, usuarios e relatorios;
+- persistencia SQLite;
+- tratamento de erros de banco.
 
-- criar a interface genérica de CRUD;
-- implementar DAO de pacientes e consultas como entidades principais relacionadas;
-- validar inserção, listagem, atualização e operações de inativação;
-- utilizar a conexão Singleton sem duplicar lógica SQL;
-- revisar o tratamento de erros de persistência.
-
-**Arquivos sob responsabilidade:**
+Arquivos principais:
 
 - `desktop/src/main/java/br/com/nutrimind/dao/CrudDao.java`
 - `desktop/src/main/java/br/com/nutrimind/dao/PatientDao.java`
@@ -130,142 +100,76 @@ Não entram na entrega:
 - `desktop/src/main/java/br/com/nutrimind/dao/UserDao.java`
 - `desktop/src/main/java/br/com/nutrimind/dao/ReportDao.java`
 
-**Evidência para avaliação:** CRUD funcional de pacientes e consultas, relacionamento persistido e padrões DAO/Singleton visíveis no código.
+### Pessoa 5 - Interface Swing
 
-**Commit sugerido:** `feat: implementar crud e persistencia dao do desktop`
+Responsavel por:
 
-### Pessoa 5 - Interface Swing e usabilidade
+- telas do desktop;
+- navegacao;
+- validacoes visuais;
+- usabilidade da demonstracao.
 
-**Responsabilidade principal:** desenvolver as telas necessárias para demonstrar o MVP.
-
-**Atividades:**
-
-- desenvolver a navegação da janela principal;
-- criar telas de pacientes, consultas e relatórios;
-- garantir mensagens claras de validação e erro;
-- manter layout consistente e adequado à demonstração;
-- remover referências visuais a funcionalidades fora do escopo, como web e assinatura.
-
-**Arquivos sob responsabilidade:**
+Arquivos principais:
 
 - `desktop/src/main/java/br/com/nutrimind/view/MainFrame.java`
 - `desktop/src/main/java/br/com/nutrimind/view/DashboardPanel.java`
 - `desktop/src/main/java/br/com/nutrimind/view/PatientsPanel.java`
 - `desktop/src/main/java/br/com/nutrimind/view/ConsultationPanel.java`
 - `desktop/src/main/java/br/com/nutrimind/view/ReportsPanel.java`
-- `desktop/src/main/java/br/com/nutrimind/view/UiUtil.java`
-
-**Evidência para avaliação:** fluxo visível de paciente para consulta e relatório funcionando na interface desktop.
-
-**Commit sugerido:** `feat: ajustar telas swing para o fluxo do mvp`
+- `desktop/src/main/java/br/com/nutrimind/view/MealPlansPanel.java`
 
 ### Pessoa 6 - Controllers e fluxo da consulta
 
-**Responsabilidade principal:** conectar interface, regras de negócio e persistência pelo MVC.
+Responsavel por:
 
-**Atividades:**
+- controllers MVC;
+- criacao de consulta vinculada ao paciente;
+- geracao de relatorio;
+- integracao entre tela, servico e DAO.
 
-- desenvolver controllers de paciente e consulta;
-- implementar a criação de consulta vinculada ao paciente e ao nutricionista;
-- controlar geração e exibição do relatório;
-- tratar exceções da aplicação com mensagens compreensíveis;
-- garantir que o fluxo básico funcione mesmo sem o recurso opcional de IA.
-
-**Arquivos sob responsabilidade:**
+Arquivos principais:
 
 - `desktop/src/main/java/br/com/nutrimind/controller/PatientController.java`
 - `desktop/src/main/java/br/com/nutrimind/controller/ConsultationController.java`
 - `desktop/src/main/java/br/com/nutrimind/service/ConsultationWorkflowService.java`
 - `desktop/src/main/java/br/com/nutrimind/exception/AppException.java`
 
-**Evidência para avaliação:** separação MVC clara e consulta registrada e recuperada pelo sistema.
+### Pessoa 7 - IA, testes e qualidade
 
-**Commit sugerido:** `feat: implementar fluxo mvc de consulta e relatorio`
+Responsavel por:
 
-### Pessoa 7 - IA assistiva, testes e qualidade
+- Gemini no desktop;
+- OpenAI fallback;
+- prompt seguro contra invencao de fatos;
+- testes;
+- checklist e documentacao de IA.
 
-**Responsabilidade principal:** implementar a IA como apoio opcional e validar a entrega técnica.
+Arquivos principais:
 
-**Atividades:**
-
-- implementar a integração OpenAI para gerar resumo e alertas de apoio, sem diagnóstico automático;
-- documentar configuração de chave e limitações éticas;
-- manter comportamento claro quando a chave de IA não estiver configurada;
-- criar ou ampliar testes de login, CRUD, consulta e configuração de IA;
-- finalizar checklist de qualidade e diagramas.
-
-**Arquivos sob responsabilidade:**
-
-- `desktop/src/main/java/br/com/nutrimind/service/AiAnalysisService.java`
+- `desktop/src/main/java/br/com/nutrimind/service/GeminiClient.java`
+- `desktop/src/main/java/br/com/nutrimind/service/GeminiRiskAnalysisService.java`
+- `desktop/src/main/java/br/com/nutrimind/service/GeminiTranscriptionService.java`
 - `desktop/src/main/java/br/com/nutrimind/service/OpenAiClient.java`
 - `desktop/src/main/java/br/com/nutrimind/service/OpenAiRiskAnalysisService.java`
 - `desktop/src/main/java/br/com/nutrimind/service/OpenAiTranscriptionService.java`
 - `desktop/src/test/java/br/com/nutrimind/SmokeTest.java`
 - `docs/ia-openai.md`
 - `docs/checklist-qualidade.md`
-- `docs/diagrama-componentes.md`
-- `docs/diagrama-implantacao.md`
 
-**Evidência para avaliação:** IA apresentada como suporte profissional, testes executáveis e documentação coerente com o MVP.
+## Ordem Recomendada
 
-**Commit sugerido:** `feat: integrar ia assistiva e validar fluxo do mvp`
+1. Banco, DER e dados de demonstracao.
+2. Modelos de dominio e regras basicas.
+3. DAOs e CRUDs.
+4. Controllers e fluxo de consulta.
+5. Telas Swing.
+6. IA com Gemini/OpenAI.
+7. Testes, documentacao e revisao final.
 
-## Matriz de Requisitos do PDF
+## Regras de GitHub
 
-| Requisito avaliado | Responsável primário | Evidência esperada |
-| --- | --- | --- |
-| Desktop Java Swing | Pessoa 5 | Telas executáveis do MVP |
-| CRUD de duas entidades relacionadas | Pessoa 4 | Pacientes e consultas persistidos |
-| MVC | Pessoa 6 | Pacotes e controllers separados |
-| DER e SQL com PK/FK | Pessoa 2 | `docs/DER.md` e `desktop/sql/schema.sql` |
-| Pilares de POO | Pessoa 3 | Classes e modelos documentados |
-| DAO e Singleton | Pessoa 4 | DAOs e configuração da conexão |
-| README e integração final | Pessoa 1 | Instruções e fluxo descritos |
-| Qualidade, testes e IA assistiva | Pessoa 7 | Testes, diagramas, checklist e ética |
-
-## Regras para Commits no GitHub
-
-O PDF informa que os commits de todos os membros serão avaliados. Por isso:
-
-1. Cada integrante deve trabalhar em sua própria conta do GitHub.
-2. Cada integrante deve realizar commits de sua parte, com mensagem objetiva.
-3. Nenhum integrante deve enviar todo o projeto pronto em um único commit.
-4. Alterações integradas por outra pessoa devem preservar o histórico do autor original.
-5. Antes da entrega, o grupo deve conferir se os sete integrantes aparecem no histórico.
-
-Exemplos de mensagens adequadas:
-
-```text
-feat: adicionar cadastro e listagem de pacientes
-feat: implementar persistencia de consultas com dao
-docs: adicionar der logico e instrucoes do banco
-test: validar login e fluxo basico de consulta
-fix: corrigir validacao de consentimento na consulta
-```
-
-## Cronograma Sugerido
-
-| Data limite | Entrega interna | Integrantes envolvidos |
-| --- | --- | --- |
-| 28/05/2026 | Banco, DER, modelos e confirmação do escopo desktop | Pessoas 1, 2 e 3 |
-| 01/06/2026 | CRUD, controllers e telas principais funcionando | Pessoas 4, 5 e 6 |
-| 04/06/2026 | IA assistiva, testes, diagramas e checklist | Pessoa 7 e apoio do grupo |
-| 06/06/2026 | Integração geral, correção de erros e README final | Todos |
-| 07/06/2026 | Conferência dos commits e ensaio do pitch | Todos |
-| 08/06/2026, até 23h59 | Envio do link do repositório no AVA | Pessoa 1 e grupo |
-| 12/06/2026, pela manhã | Pitch do MVP | Todos |
-
-## Roteiro Funcional para Demonstração
-
-1. Abrir o Nutrimind Desktop.
-2. Entrar com usuário nutricionista.
-3. Listar e cadastrar um paciente.
-4. Registrar uma consulta para esse paciente.
-5. Mostrar o histórico salvo no SQLite.
-6. Demonstrar resumo e alertas por IA, caso a chave esteja configurada.
-7. Mostrar que o profissional revisa o relatório e que a IA não realiza diagnóstico.
-8. Apontar DER, script SQL, arquitetura MVC, DAO e Singleton no repositório.
-
-## Observação Final
-
-Cada integrante possui uma responsabilidade primária, mas a entrega pertence ao grupo. Qualquer ajuste feito em conjunto deve ser registrado por commits claros e revisado antes do envio, para que a documentação, o código e o discurso do pitch apresentem o mesmo MVP.
+1. Cada integrante trabalha em sua propria branch.
+2. Cada parte deve ter commits do proprio integrante.
+3. Ninguem trabalha direto na `main`.
+4. Cada branch deve abrir Pull Request.
+5. Antes da entrega, conferir se os integrantes aparecem no historico.

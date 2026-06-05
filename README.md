@@ -1,17 +1,21 @@
 # Nutrimind
 
-Sistema acadêmico de apoio à nutrição comportamental, desenvolvido para a entrega do **II InterConnect Evolution - Prototipagem Técnica**.
+Sistema academico de apoio a nutricao comportamental, desenvolvido para a entrega do **II InterConnect Evolution - Prototipagem Tecnica**.
 
-A entrega principal é uma aplicação web **React + Vite**, publicada pela Vercel e conectada ao Supabase. O repositório também preserva a implementação desktop **Java 17 + Swing + SQLite** produzida durante o desenvolvimento.
+## Entrega Principal
 
-## Ambiente Publicado
+O projeto sera apresentado como um unico aplicativo desktop:
 
-- Aplicacao web: `https://nutrimind-two.vercel.app`
-- Projeto Supabase: `nutrimind`
-- Project ref: `hcobzfxkkvezlopktlzf`
-- Regiao: `sa-east-1`
+- **Java 17**
+- **Swing**
+- **SQLite**
+- **Arquitetura MVC**
+- **DAO para persistencia**
+- **Singleton de conexao**
+- **CRUDs e consultas relacionadas a pacientes**
+- **IA assistiva obrigatoria no fluxo de analise**
 
-O banco, o login real, as politicas RLS e a Edge Function estao publicados. Para apresentacao gratuita, cadastre uma chave valida como segredo `GEMINI_API_KEY` no gerenciamento de segredos das Edge Functions do Supabase. A chave nunca deve ser colocada no frontend ou versionada no Git.
+A aplicacao web React/Vite continua no repositorio e publicada na Vercel como apoio visual/demo, mas nao substitui o desktop na entrega principal.
 
 ## Integrantes
 
@@ -23,93 +27,102 @@ O banco, o login real, as politicas RLS e a Edge Function estao publicados. Para
 - Pessoa 6
 - Pessoa 7
 
-## Escopo
+## Escopo do Desktop
 
-O MVP contempla:
+O desktop contempla:
 
-- login e cadastro com Supabase Auth;
-- cadastro, listagem, edição e inativação de pacientes;
+- login demonstrativo com perfil de nutricionista e administrador;
+- cadastro, listagem, edicao e inativacao de pacientes;
+- cadastro administrativo de nutricionistas;
 - registro de consultas vinculadas aos pacientes;
-- consentimento, gravação pelo navegador, áudio enviado para análise ou transcrição manual e observações clínicas;
-- análise obrigatória por IA para resumo, riscos, relatório e plano inicial;
-- aprovação profissional do plano alimentar;
-- banco PostgreSQL do Supabase com PK/FK e RLS;
-- documentação com DER, diagramas e checklist.
+- consentimento de audio/video;
+- gravacao de audio em `.wav`;
+- vinculo opcional de video;
+- transcricao e analise por IA;
+- alertas com severidade;
+- decisao clinica sobre alertas;
+- relatorio da consulta;
+- plano alimentar em revisao;
+- aprovacao profissional do plano;
+- banco SQLite com PK/FK;
+- documentacao tecnica com DER, componentes, implantacao e checklist.
 
-Não fazem parte do escopo final: pagamentos reais, diagnóstico automático ou prescrição sem revisão profissional.
+Nao fazem parte do escopo final: pagamentos reais, diagnostico automatico ou prescricao sem revisao profissional.
 
-## Requisito de IA
+## IA no Desktop
 
-A IA é usada como apoio ao nutricionista, não como substituta da decisão profissional. Para a apresentacao academica, o provedor principal e Gemini API no free tier. A chave deve ser cadastrada somente como segredo da Edge Function do Supabase:
+A IA e apoio a decisao. O nutricionista sempre revisa e aprova os resultados antes de usar.
+
+O desktop agora reaproveita o fluxo do web:
+
+- usa **Gemini API** como provedor principal quando `GEMINI_API_KEY` estiver configurada;
+- usa **OpenAI API** como fallback quando nao houver Gemini e `OPENAI_API_KEY` existir;
+- bloqueia analise, transcricao e relatorio inteligente se nenhuma chave estiver configurada.
+
+Configuracao recomendada para apresentacao gratuita:
 
 ```text
 GEMINI_API_KEY=sua-chave
+GEMINI_ANALYSIS_MODEL=gemini-2.5-flash-lite
+GEMINI_TRANSCRIPTION_MODEL=gemini-2.5-flash-lite
 ```
 
-Modelos configuráveis:
-
-- `GEMINI_ANALYSIS_MODEL`: padrao `gemini-2.0-flash`
-- `GEMINI_TRANSCRIPTION_MODEL`: padrao `gemini-2.0-flash`
-- `OPENAI_TRANSCRIPTION_MODEL`: padrão `gpt-4o-mini-transcribe`
-- `OPENAI_ANALYSIS_MODEL`: padrão `gpt-5.4-mini`
-
-Se `GEMINI_API_KEY` existir, a Edge Function usa Gemini. Se nao existir e `OPENAI_API_KEY` existir, usa OpenAI. Sem nenhuma chave configurada, o sistema mantém os cadastros disponíveis, mas bloqueia a análise real. O ambiente local oferece uma simulação claramente identificada para desenvolvimento da interface.
-
-No Supabase Dashboard, abra o projeto `nutrimind`, acesse o gerenciamento de segredos das Edge Functions e adicione:
+Fallback pago:
 
 ```text
-GEMINI_API_KEY=...
+OPENAI_API_KEY=sua-chave
+OPENAI_TRANSCRIPTION_MODEL=gpt-4o-mini-transcribe
+OPENAI_ANALYSIS_MODEL=gpt-5-mini
 ```
 
-Para pegar a chave Gemini gratuita, use `https://aistudio.google.com/apikey`. O segredo fica disponivel imediatamente para a funcao publicada; nao e necessario refazer o deploy.
+Nunca coloque chaves de API no GitHub.
 
-## Aplicação Web
+## Como Rodar o Desktop
 
-Pré-requisito: Node.js 20 ou superior.
+Pre-requisito: Java 17 instalado.
 
-```powershell
-cd web
-npm install
-npm run dev
-```
-
-Configure `web/.env.local` a partir de `web/.env.example`:
+No Explorador de Arquivos, abra a pasta:
 
 ```text
-VITE_SUPABASE_URL=https://seu-projeto.supabase.co
-VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_sua_chave_publica
+C:\Users\carlo\OneDrive\Documentos\New project 6
 ```
 
-O schema, as políticas RLS e a Edge Function estão em `supabase/`. O deploy da Vercel usa `vercel.json`.
-
-## Aplicação Desktop
-
-Pré-requisito: Java 17.
+Para rodar pelo terminal:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\run-desktop.ps1
 ```
 
-O script baixa as dependências em `lib/`, compila o projeto legado e inicia o aplicativo Swing.
-
-Credenciais de demonstração:
+Credenciais de demonstracao:
 
 - Nutricionista: `nutri@nutrimind.com` / `123456`
 - Administrador: `admin@nutrimind.com` / `admin123`
 
 ## Fluxo Principal
 
-1. O nutricionista autentica na aplicação web.
+1. O nutricionista entra no desktop.
 2. Cadastra ou seleciona um paciente.
-3. Registra consentimento, notas clínicas e grava a consulta pelo navegador ou informa transcrição manual.
-4. Encerra a consulta e solicita apoio obrigatório da IA.
-5. O sistema salva resumo, alertas, relatório e plano em revisão.
-6. O nutricionista registra decisões frente aos alertas.
-7. O nutricionista revisa e aprova o plano alimentar antes de utilizá-lo.
+3. Registra consentimento, notas clinicas e transcricao manual ou audio gravado.
+4. Solicita analise obrigatoria por IA.
+5. O sistema salva consulta, resumo, alertas, relatorio e plano em revisao.
+6. O nutricionista registra decisoes frente aos alertas.
+7. O nutricionista revisa e aprova o plano alimentar.
 
-## Organização no GitHub
+## Aplicacao Web Mantida
 
-O grupo deve trabalhar com branches e Pull Requests:
+A versao web continua disponivel para demonstracao visual:
+
+- URL: `https://nutrimind-two.vercel.app`
+- Stack: React + Vite + Supabase + Vercel
+- Login demo: `demo@nutrimind.app` / `Nutrimind@2026`
+
+Ela foi mantida porque ajuda no pitch e no teste pelo celular, mas o requisito academico principal fica coberto pelo desktop Java.
+
+## Organizacao no GitHub
+
+O grupo deve trabalhar com branches e Pull Requests. Ninguem deve trabalhar direto na `main`.
+
+Sugestao de divisao:
 
 - `pessoa1-login-readme`
 - `pessoa2-banco-der`
@@ -119,20 +132,16 @@ O grupo deve trabalhar com branches e Pull Requests:
 - `pessoa6-controllers-fluxo`
 - `pessoa7-ia-testes-docs`
 
-Ninguém deve trabalhar direto na `main`. Cada integrante abre um Pull Request com sua parte.
+## Documentacao
 
-## Documentação
-
-- [Divisão de tarefas](docs/divisao-de-tarefas.md)
-- [DER lógico](docs/DER.md)
+- [Divisao de tarefas](docs/divisao-de-tarefas.md)
+- [DER logico](docs/DER.md)
 - [Diagrama de componentes](docs/diagrama-componentes.md)
-- [Diagrama de implantação](docs/diagrama-implantacao.md)
+- [Diagrama de implantacao](docs/diagrama-implantacao.md)
 - [Checklist de qualidade](docs/checklist-qualidade.md)
 - [Cuidados com IA](docs/ia-openai.md)
 - [Teste final](docs/teste-final.md)
 
-## Aviso Ético
+## Aviso Etico
 
-O Nutrimind é um sistema acadêmico demonstrativo. A IA apoia a organização da consulta, mas não substitui anamnese, avaliação presencial, diagnóstico, prescrição nutricional ou encaminhamento profissional.
-
-O áudio bruto da consulta não é persistido no banco pelo fluxo principal; ele é usado apenas para transcrição/análise da Edge Function. O sistema salva transcrição, resumo, alertas, relatório e plano.
+O Nutrimind e um sistema academico demonstrativo. A IA apoia a organizacao da consulta, mas nao substitui anamnese, avaliacao presencial, diagnostico, prescricao nutricional ou encaminhamento profissional.

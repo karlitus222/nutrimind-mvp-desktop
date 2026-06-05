@@ -24,8 +24,8 @@ import br.com.nutrimind.model.User;
 import br.com.nutrimind.service.AuthService;
 import br.com.nutrimind.service.ConsultationResult;
 import br.com.nutrimind.service.ConsultationWorkflowService;
+import br.com.nutrimind.service.GeminiClient;
 import br.com.nutrimind.service.LocalRiskHeuristics;
-import br.com.nutrimind.service.OpenAiClient;
 import br.com.nutrimind.service.RoleAccessPolicy;
 
 import java.util.List;
@@ -46,29 +46,29 @@ public class SmokeTest {
     private static void testLogin() {
         AuthService auth = new AuthService(new UserDao(), new AuditLogDao());
         User user = auth.login("nutri@nutrimind.com", "123456".toCharArray());
-        assertTrue(user.getId() > 0, "login deve retornar usuário persistido");
+        assertTrue(user.getId() > 0, "login deve retornar usuario persistido");
     }
 
     private static void testPatients() {
         List<Patient> patients = new PatientDao().findAll();
-        assertTrue(patients.size() >= 3, "seed deve conter pacientes de demonstração");
+        assertTrue(patients.size() >= 3, "seed deve conter pacientes de demonstracao");
     }
 
     private static void testLocalHeuristics() {
         List<RiskItem> risks = new LocalRiskHeuristics().validate(
-                "Tenho ansiedade, sinto culpa depois de comer e às vezes pulo refeições.");
-        assertTrue(!risks.isEmpty(), "heurística auxiliar deve detectar riscos conhecidos");
+                "Tenho ansiedade, sinto culpa depois de comer e as vezes pulo refeicoes.");
+        assertTrue(!risks.isEmpty(), "heuristica auxiliar deve detectar riscos conhecidos");
     }
 
     private static void testAiConfigurationGate() {
-        if (AppConfig.hasOpenAiKey()) {
+        if (AppConfig.hasAnyAiKey()) {
             return;
         }
         try {
-            new OpenAiClient().ensureConfigured();
+            new GeminiClient().ensureConfigured();
             throw new AssertionError("IA sem chave deveria ser bloqueada");
         } catch (AppException expected) {
-            assertTrue(expected.getMessage().contains("OPENAI_API_KEY"), "mensagem deve orientar configuração da chave");
+            assertTrue(expected.getMessage().contains("GEMINI_API_KEY"), "mensagem deve orientar configuracao da chave");
         }
     }
 

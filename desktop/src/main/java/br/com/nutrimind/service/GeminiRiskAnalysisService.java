@@ -10,19 +10,19 @@ import br.com.nutrimind.util.JsonUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OpenAiRiskAnalysisService implements AiAnalysisService {
-    private final OpenAiClient client;
+public class GeminiRiskAnalysisService implements AiAnalysisService {
+    private final GeminiClient client;
 
-    public OpenAiRiskAnalysisService(OpenAiClient client) {
+    public GeminiRiskAnalysisService(GeminiClient client) {
         this.client = client;
     }
 
     @Override
     public AiAnalysisResult analyze(AnalysisRequest request) {
-        String response = client.postJson("/v1/responses", buildPayload(request));
-        String outputJson = extractOutputText(response);
+        String response = client.generateContent(AppConfig.GEMINI_ANALYSIS_MODEL, buildPayload(request));
+        String outputJson = normalizeJson(JsonUtil.extractString(response, "text"));
         if (outputJson.isBlank()) {
-            throw new AppException("A IA nao retornou uma analise estruturada.");
+            throw new AppException("O Gemini nao retornou uma analise estruturada.");
         }
         return parseStructuredOutput(outputJson);
     }
@@ -30,7 +30,6 @@ public class OpenAiRiskAnalysisService implements AiAnalysisService {
     private String buildPayload(AnalysisRequest request) {
         String prompt = """
                 Voce e o modulo de IA do Nutrimind, um sistema academico de apoio a nutricao comportamental.
-                Analise a transcricao e os dados clinicos em portugues do Brasil.
                 A IA apoia o nutricionista, mas nao substitui decisao profissional e nao fecha diagnostico.
                 Nao invente fatos, habitos ou sintomas.
                 So afirme comportamentos especificos quando eles estiverem explicitamente escritos no historico,
@@ -70,7 +69,6 @@ public class OpenAiRiskAnalysisService implements AiAnalysisService {
         String schema = """
                 {
                   "type":"object",
-                  "additionalProperties":false,
                   "properties":{
                     "summary":{"type":"string"},
                     "recommendations":{"type":"string"},
@@ -79,7 +77,6 @@ public class OpenAiRiskAnalysisService implements AiAnalysisService {
                       "type":"array",
                       "items":{
                         "type":"object",
-                        "additionalProperties":false,
                         "properties":{
                           "type":{"type":"string"},
                           "severity":{"type":"string","enum":["LEVE","MODERADO","GRAVE"]},
@@ -96,27 +93,19 @@ public class OpenAiRiskAnalysisService implements AiAnalysisService {
 
         return """
                 {
-                  "model": %s,
-                  "input": [
+                  "contents": [
                     {
-                      "role": "system",
-                      "content": [{"type":"input_text","text":"Responda somente com JSON valido seguindo o schema. Linguagem: portugues do Brasil."}]
-                    },
-                    {
-                      "role": "user",
-                      "content": [{"type":"input_text","text":%s}]
+                      "parts": [
+                        {"text": %s}
+                      ]
                     }
                   ],
-                  "text": {
-                    "format": {
-                      "type": "json_schema",
-                      "name": "nutrimind_analysis",
-                      "strict": true,
-                      "schema": %s
-                    }
+                  "generationConfig": {
+                    "responseMimeType": "application/json",
+                    "responseJsonSchema": %s
                   }
                 }
-                """.formatted(JsonUtil.quote(AppConfig.OPENAI_ANALYSIS_MODEL), JsonUtil.quote(prompt), schema);
+                """.formatted(JsonUtil.quote(prompt), schema);
     }
 
     private AiAnalysisResult parseStructuredOutput(String outputJson) {
@@ -132,8 +121,8 @@ public class OpenAiRiskAnalysisService implements AiAnalysisService {
             ));
         }
         return new AiAnalysisResult(
-                "OpenAI",
-                AppConfig.OPENAI_ANALYSIS_MODEL,
+                "Gemini",
+                AppConfig.GEMINI_ANALYSIS_MODEL,
                 outputJson,
                 JsonUtil.extractString(outputJson, "summary"),
                 JsonUtil.extractString(outputJson, "recommendations"),
@@ -142,20 +131,17 @@ public class OpenAiRiskAnalysisService implements AiAnalysisService {
         );
     }
 
-    private String extractOutputText(String response) {
-        int typeIndex = response.indexOf("\"type\":\"output_text\"");
-        if (typeIndex < 0) {
-            typeIndex = response.indexOf("\"type\": \"output_text\"");
+    private String normalizeJson(String value) {
+        String trimmed = value == null ? "" : value.trim();
+        if (!trimmed.startsWith("```")) {
+            return trimmed;
         }
-        if (typeIndex >= 0) {
-            String slice = response.substring(typeIndex);
-            return JsonUtil.extractString(slice, "text");
+        int firstBreak = trimmed.indexOf('\n');
+        int lastFence = trimmed.lastIndexOf("```");
+        if (firstBreak >= 0 && lastFence > firstBreak) {
+            return trimmed.substring(firstBreak + 1, lastFence).trim();
         }
-        String direct = JsonUtil.extractString(response, "output_text");
-        if (!direct.isBlank()) {
-            return direct;
-        }
-        return JsonUtil.extractString(response, "text");
+        return trimmed;
     }
 
     private String nullSafe(String value) {

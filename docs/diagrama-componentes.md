@@ -2,46 +2,54 @@
 
 ```mermaid
 flowchart LR
-    subgraph Browser["Navegador do usuario"]
-        UI["React + Vite"]
-        Recorder["MediaRecorder\ncaptura de audio"]
-        SupabaseClient["Supabase JS Client"]
+    subgraph Desktop["Entrega principal: Desktop Java"]
+        View["Views Swing"]
+        Controller["Controllers MVC"]
+        Service["Services de dominio"]
+        DAO["DAOs"]
+        Config["Database Singleton"]
+        Audio["AudioRecorderService"]
+        Export["Exportacao JSON"]
     end
 
-    subgraph Vercel["Vercel"]
-        StaticApp["Frontend publicado\nnutrimind-two.vercel.app"]
+    subgraph LocalDB["Banco local"]
+        SQLite["SQLite\nnutrimind.db"]
     end
 
-    subgraph Supabase["Supabase"]
-        Auth["Auth\nlogin e sessao"]
-        Database["PostgreSQL\nPK/FK + RLS"]
-        EdgeFunction["Edge Function\nanalyze-consultation"]
+    subgraph IA["IA externa"]
+        Gemini["Gemini API\nprincipal/free"]
+        OpenAI["OpenAI API\nfallback"]
     end
 
-    subgraph AI["Provedores de IA"]
-        Gemini["Gemini API\nprovedor principal"]
-        OpenAI["OpenAI API\nfallback configuravel"]
+    subgraph Web["Demo mantido"]
+        React["React + Vite"]
+        Supabase["Supabase\nAuth + PostgreSQL + Edge Function"]
+        Vercel["Vercel"]
     end
 
-    UI --> SupabaseClient
-    UI --> Recorder
-    StaticApp --> UI
-    SupabaseClient --> Auth
-    SupabaseClient --> Database
-    SupabaseClient --> EdgeFunction
-    Recorder --> EdgeFunction
-    EdgeFunction --> Gemini
-    EdgeFunction --> OpenAI
-    EdgeFunction --> Database
+    View --> Controller
+    Controller --> Service
+    Service --> DAO
+    DAO --> Config
+    Config --> SQLite
+    Service --> Audio
+    Service --> Export
+    Service -- HTTPS --> Gemini
+    Service -- HTTPS --> OpenAI
+
+    React --> Supabase
+    Vercel --> React
+    Supabase -- HTTPS --> Gemini
+    Supabase -- HTTPS --> OpenAI
 ```
 
-## Responsabilidades
+## Responsabilidades do Desktop
 
-- **React + Vite**: interface, login, pacientes, consulta, relatorios, alertas, planos e painel administrativo.
-- **MediaRecorder**: grava o audio da consulta no navegador quando houver consentimento.
-- **Supabase Auth**: autentica nutricionistas e administradores.
-- **PostgreSQL + RLS**: guarda pacientes, consultas, alertas, relatorios, planos e auditoria com controle de acesso.
-- **Edge Function**: recebe dados da consulta, audio/transcricao e contexto clinico; chama a IA e devolve JSON estruturado.
+- **Views Swing**: telas de login, dashboard, pacientes, consulta com IA, relatorios, planos e administracao.
+- **Controllers MVC**: conectam interface, servicos e persistencia.
+- **Services**: regras de autenticacao, fluxo de consulta, gravacao, transcricao, analise por IA, relatorio e plano.
+- **DAOs**: CRUD e consultas SQL no SQLite.
+- **Database Singleton**: centraliza a conexao JDBC com `nutrimind.db`.
 - **Gemini/OpenAI**: geram transcricao, resumo, riscos, recomendacoes e sugestao inicial de plano.
 
-O audio bruto nao e persistido pelo fluxo principal. O sistema salva transcricao, resumo, alertas, relatorio e plano para revisao do nutricionista.
+O web app continua no repositorio como demonstrativo, mas a arquitetura cobrada pelo PDF esta implementada no desktop.

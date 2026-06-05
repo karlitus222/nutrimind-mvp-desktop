@@ -1,117 +1,151 @@
-# DER Logico
+# DER Logico - Desktop Java + SQLite
 
-Os diagramas enviados servem como base de estudo, mas nao representam exatamente a versao final do Nutrimind. Eles usam tabelas como `user`, `nutritionist` e `consultation_report`, enquanto a aplicacao publicada usa Supabase Auth e o schema real abaixo.
-
-No projeto final, o login fica em `auth.users`, gerenciado pelo Supabase. A tabela `profiles` guarda os dados do profissional e fica ligada ao usuario autenticado pelo mesmo `id`.
+Este DER representa a entrega principal do Nutrimind: aplicativo Java 17 + Swing + SQLite.
 
 ```mermaid
 erDiagram
-    AUTH_USERS ||--|| PROFILES : autentica
-    PROFILES ||--o{ PATIENTS : acompanha
-    PROFILES ||--o{ CONSULTATIONS : realiza
+    USERS ||--o| NUTRITIONISTS : especializa
+    USERS ||--o{ PATIENTS : atende
+    USERS ||--o{ CONSULTATIONS : realiza
     PATIENTS ||--o{ CONSULTATIONS : possui
-    CONSULTATIONS ||--o{ ALERTS : gera
-    CONSULTATIONS ||--o| REPORTS : gera
+    CONSULTATIONS ||--o{ MEDIA_SESSIONS : registra
+    CONSULTATIONS ||--o{ RISK_ANALYSES : recebe
+    RISK_ANALYSES ||--o{ ALERTS : gera
+    CONSULTATIONS ||--o{ ALERTS : possui
+    ALERTS ||--o{ ALERT_DECISIONS : recebe
+    CONSULTATIONS ||--o{ CONSULTATION_REPORTS : gera
     PATIENTS ||--o{ MEAL_PLANS : recebe
     CONSULTATIONS o|--o{ MEAL_PLANS : orienta
-    PROFILES o|--o{ MEAL_PLANS : aprova
-    PROFILES o|--o{ AUDIT_LOGS : registra
+    USERS o|--o{ MEAL_PLANS : aprova
+    USERS ||--o{ SUBSCRIPTIONS : possui
+    USERS o|--o{ AUDIT_LOGS : registra
 
-    AUTH_USERS {
-        uuid id PK
-        text email
+    USERS {
+        integer id PK
+        text name
+        text email UK
+        text password_hash
+        text role
+        integer active
+        text created_at
     }
 
-    PROFILES {
-        uuid id PK,FK
-        text full_name
-        text role
+    NUTRITIONISTS {
+        integer user_id PK,FK
         text crn
-        timestamptz created_at
+        text specialty
     }
 
     PATIENTS {
-        uuid id PK
-        uuid owner_id FK
+        integer id PK
+        integer nutritionist_id FK
         text name
         text cpf
-        date birth_date
+        text birth_date
         text phone
         text email
         text clinical_notes
         text eating_history
-        boolean active
-        timestamptz created_at
-        timestamptz updated_at
+        integer active
+        text created_at
     }
 
     CONSULTATIONS {
-        uuid id PK
-        uuid patient_id FK
-        uuid nutritionist_id FK
-        boolean consent_audio
-        boolean consent_video
-        text clinical_notes
-        text manual_transcript
-        text transcript
-        text visual_notes
+        integer id PK
+        integer patient_id FK
+        integer nutritionist_id FK
+        text started_at
+        text ended_at
         text status
-        text ai_summary
-        text ai_model
-        timestamptz created_at
+        integer consent_audio
+        integer consent_video
+        text clinical_notes
+        text transcript
+        text visual_observations
+    }
+
+    MEDIA_SESSIONS {
+        integer id PK
+        integer consultation_id FK
+        text type
+        text file_path
+        text quality
+        integer duration_seconds
+        text status
+        text created_at
+    }
+
+    RISK_ANALYSES {
+        integer id PK
+        integer consultation_id FK
+        text provider
+        text model
+        text raw_json
+        text summary
+        text created_at
     }
 
     ALERTS {
-        uuid id PK
-        uuid consultation_id FK
-        text type
+        integer id PK
+        integer consultation_id FK
+        integer analysis_id FK
+        text risk_type
         text severity
-        text justification
         text message
+        text justification
         text status
-        text decision
-        text decision_notes
-        timestamptz decided_at
-        timestamptz created_at
+        text created_at
     }
 
-    REPORTS {
-        uuid id PK
-        uuid consultation_id FK,UK
+    ALERT_DECISIONS {
+        integer id PK
+        integer alert_id FK
+        text action
+        text notes
+        text decided_at
+    }
+
+    CONSULTATION_REPORTS {
+        integer id PK
+        integer consultation_id FK
         text identification_section
         text clinical_section
         text recommendations_section
         text limitations_section
-        timestamptz created_at
+        text generated_at
     }
 
     MEAL_PLANS {
-        uuid id PK
-        uuid patient_id FK
-        uuid consultation_id FK
+        integer id PK
+        integer patient_id FK
+        integer consultation_id FK
         text objective
         text description
         text status
-        uuid approved_by FK
-        timestamptz approved_at
-        timestamptz created_at
+        text start_date
+        text end_date
+        integer approved_by FK
+        text approved_at
+    }
+
+    SUBSCRIPTIONS {
+        integer id PK
+        integer nutritionist_id FK
+        text plan_name
+        text status
+        text last_payment_status
+        text next_due_date
     }
 
     AUDIT_LOGS {
-        bigint id PK
-        uuid user_id FK
+        integer id PK
+        integer user_id FK
         text action
-        jsonb details
-        timestamptz created_at
+        text details
+        text created_at
     }
 ```
 
-## Ajustes em relacao aos diagramas enviados
+O script SQL de criacao esta em `desktop/sql/schema.sql`.
 
-- `user` foi substituida por `auth.users` + `profiles`, porque o login real e feito pelo Supabase Auth.
-- `nutritionist` nao e uma tabela separada no schema web; o nutricionista e um `profile` com `role = 'NUTRITIONIST'` e campo `crn`.
-- `consultation_report` foi normalizada como `reports`.
-- O modelo final inclui `alerts`, `meal_plans` e `audit_logs`, que sao necessarios para o fluxo de IA, revisao profissional e rastreabilidade.
-- As chaves primarias usam `uuid`, exceto `audit_logs.id`, que usa `bigint` gerado automaticamente.
-
-O script SQL principal esta em `supabase/migrations/20260601180000_nutrimind_schema.sql`.
+A versao web usa Supabase/PostgreSQL e foi mantida como demonstrativo publicado, mas o DER acima e o modelo usado na entrega desktop.

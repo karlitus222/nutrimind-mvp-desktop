@@ -2,50 +2,75 @@
 
 Data do teste: 2026-06-05
 
-## Ambiente
+## Ambiente Principal
+
+- Aplicacao: Nutrimind Desktop
+- Stack: Java 17 + Swing + SQLite
+- Banco: `desktop/data/nutrimind.db`
+- Script SQL: `desktop/sql/schema.sql`
+- Script de teste: `scripts/test-desktop.ps1`
+
+## Credenciais do Desktop
+
+- Nutricionista: `nutri@nutrimind.com` / `123456`
+- Administrador: `admin@nutrimind.com` / `admin123`
+
+## Validacoes Executadas no Desktop
+
+- Compilacao do projeto Java.
+- Inicializacao do SQLite.
+- Login de nutricionista.
+- Seed com pacientes de demonstracao.
+- Heuristicas locais auxiliares.
+- Bloqueio da IA quando nenhuma chave esta configurada.
+- Politica de acesso por perfil.
+- Fluxo de consulta com IA simulada no teste.
+- Persistencia de consulta.
+- Persistencia de analise.
+- Persistencia de alertas.
+- Registro de decisao frente a alerta.
+- Persistencia de relatorio.
+- Criacao e aprovacao de plano alimentar.
+- Desativacao de usuario pelo administrador.
+
+## Resultado do Desktop
+
+Comando executado:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\test-desktop.ps1
+```
+
+Resultado observado:
+
+```text
+BuildScriptTest OK
+Desktop compilado
+SmokeTest OK
+Testes desktop concluidos.
+```
+
+## IA no Desktop
+
+O desktop seleciona o provedor automaticamente:
+
+1. `GEMINI_API_KEY`: Gemini principal.
+2. `OPENAI_API_KEY`: OpenAI fallback.
+3. Sem chave: analise/transcricao inteligente ficam bloqueadas com mensagem de configuracao.
+
+O prompt foi ajustado para nao inventar fatos, habitos ou sintomas. Falas vagas, como "tenho problema com comida", devem gerar necessidade de aprofundamento em vez de conclusoes especificas.
+
+## Ambiente Web Mantido
 
 - Producao: `https://nutrimind-two.vercel.app`
 - Supabase project ref: `hcobzfxkkvezlopktlzf`
 - Edge Function: `analyze-consultation`
-- Provedor de IA ativo: Gemini
+- Provedor testado anteriormente: Gemini
 - Modelo de apresentacao: `gemini-2.5-flash-lite`
+- Login demo: `demo@nutrimind.app` / `Nutrimind@2026`
 
-## Credenciais de apresentacao
+O web app continua como apoio de pitch e teste pelo celular, mas a entrega tecnica principal e o desktop Java.
 
-- E-mail: `demo@nutrimind.app`
-- Senha: `Nutrimind@2026`
+## Observacao de Seguranca
 
-## Validacoes executadas
-
-- Login real pelo Supabase Auth.
-- Paciente ficticio disponivel para apresentacao.
-- Chamada da Edge Function com JWT obrigatorio.
-- Analise real por Gemini.
-- Persistencia de consulta no banco.
-- Persistencia de alertas.
-- Registro de decisao frente a alerta.
-- Persistencia de relatorio em partes.
-- Criacao e aprovacao de plano alimentar.
-- Site publico respondendo HTTP 200.
-
-## Caso de teste usado
-
-Paciente relata ansiedade antes das refeicoes, culpa depois de comer e sensacao de perda de controle quando esta sob estresse.
-
-## Resultado esperado
-
-A IA deve apontar sinais relacionados a ansiedade alimentar, culpa apos refeicao ou necessidade de aprofundamento sobre perda de controle, sem fechar diagnostico. O relatorio deve reforcar que a decisao final e do nutricionista.
-
-## Resultado observado
-
-Fluxo concluido com sucesso. A funcao retornou analise estruturada, alertas e plano inicial. O alerta foi marcado como revisado e o plano foi aprovado para demonstracao.
-
-- Consulta de teste: `9be8a44f-6a88-48e2-a691-8e10ee68b058`
-- Provedor retornado: Gemini
-- Modelo retornado: `gemini-2.5-flash-lite`
-- Alertas retornados: 2
-- Plano: aprovado
-
-## Observacao de seguranca
-
-Usar somente dados ficticios na apresentacao. O audio bruto nao e persistido no banco pelo fluxo principal.
+Usar somente dados ficticios na apresentacao. Chaves de IA devem ficar em variaveis de ambiente/segredos e nunca devem ser versionadas.

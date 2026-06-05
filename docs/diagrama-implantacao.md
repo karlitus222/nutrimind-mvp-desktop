@@ -2,22 +2,13 @@
 
 ```mermaid
 flowchart TB
-    User["Nutricionista/Admin\ncelular ou computador"]
+    User["Nutricionista/Admin"]
 
-    subgraph Client["Dispositivo do usuario"]
-        Browser["Navegador"]
-        Mic["Microfone\nconsentimento obrigatorio"]
-    end
-
-    subgraph Hosting["Vercel"]
-        WebApp["Nutrimind Web\nReact + Vite"]
-    end
-
-    subgraph SupabaseCloud["Supabase Cloud"]
-        Auth["Supabase Auth"]
-        DB["PostgreSQL\nprofiles, patients, consultations,\nalerts, reports, meal_plans, audit_logs"]
-        Function["Edge Function\nanalyze-consultation"]
-        Secrets["Secrets\nGEMINI_API_KEY / OPENAI_API_KEY"]
+    subgraph DesktopMachine["Computador do consultorio"]
+        JavaApp["Nutrimind Desktop\nJava 17 + Swing"]
+        DB["nutrimind.db\nSQLite"]
+        Media["Arquivos locais\n.wav e video vinculado"]
+        Exports["Exportacoes JSON"]
     end
 
     subgraph AICloud["IA externa"]
@@ -25,26 +16,34 @@ flowchart TB
         OpenAI["OpenAI API fallback"]
     end
 
-    User --> Browser
-    Mic --> Browser
-    Browser -- HTTPS --> WebApp
-    Browser -- HTTPS --> Auth
-    Browser -- HTTPS --> DB
-    Browser -- HTTPS --> Function
-    Function --> Secrets
-    Function -- HTTPS --> Gemini
-    Function -- HTTPS --> OpenAI
-    Function --> DB
+    subgraph WebDemo["Demo web mantido"]
+        Browser["Navegador"]
+        Vercel["Vercel\nnutrimind-two.vercel.app"]
+        Supabase["Supabase\nAuth + PostgreSQL + Edge Function"]
+    end
+
+    User --> JavaApp
+    JavaApp --> DB
+    JavaApp --> Media
+    JavaApp --> Exports
+    JavaApp -- HTTPS com GEMINI_API_KEY --> Gemini
+    JavaApp -- HTTPS com OPENAI_API_KEY --> OpenAI
+
+    User -. apoio visual .-> Browser
+    Browser --> Vercel
+    Browser --> Supabase
+    Supabase -- HTTPS --> Gemini
+    Supabase -- HTTPS --> OpenAI
 ```
 
-## Fluxo implantado
+## Fluxo implantado do Desktop
 
-1. O usuario acessa `https://nutrimind-two.vercel.app` pelo navegador.
-2. A interface e carregada pela Vercel.
-3. O login e validado pelo Supabase Auth.
-4. Os dados do sistema sao lidos e gravados no PostgreSQL com politicas RLS.
-5. Ao analisar uma consulta, o navegador envia audio/transcricao e contexto clinico para a Edge Function.
-6. A Edge Function usa a chave cadastrada como segredo e chama Gemini ou OpenAI.
-7. O resultado estruturado volta para o sistema e e salvo como consulta, alertas, relatorio e plano em revisao.
+1. O usuario abre o Nutrimind Desktop no computador.
+2. O sistema inicializa o SQLite local e carrega os dados de demonstracao.
+3. O nutricionista registra pacientes e consultas.
+4. Quando houver consentimento, o audio gravado em `.wav` pode ser enviado para transcricao por IA.
+5. A analise por IA usa Gemini quando `GEMINI_API_KEY` existir; caso contrario, usa OpenAI se `OPENAI_API_KEY` existir.
+6. O resultado estruturado e salvo no SQLite como analise, alertas, relatorio e plano alimentar em revisao.
+7. O nutricionista toma a decisao final, registra conduta e aprova o plano.
 
-O desktop Java foi preservado no repositorio como implementacao legada de desenvolvimento, mas a implantacao principal do trabalho e a aplicacao web publicada.
+O web app permanece publicado para apoio de apresentacao e teste visual pelo celular, mas nao altera a entrega principal Java.
