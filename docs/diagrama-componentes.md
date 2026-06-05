@@ -2,39 +2,46 @@
 
 ```mermaid
 flowchart LR
-    subgraph Desktop["Desktop Java Swing"]
-        View["Views Swing"]
-        Controller["Controllers MVC"]
-        Service["Services de domínio"]
-        DAO["DAOs"]
-        Config["Database Singleton"]
-        Audio["Captura de áudio"]
-        Report["Relatórios e planos"]
+    subgraph Browser["Navegador do usuario"]
+        UI["React + Vite"]
+        Recorder["MediaRecorder\ncaptura de audio"]
+        SupabaseClient["Supabase JS Client"]
     end
 
-    subgraph IA["OpenAI"]
-        STT["Speech-to-text"]
-        Responses["Responses API"]
+    subgraph Vercel["Vercel"]
+        StaticApp["Frontend publicado\nnutrimind-two.vercel.app"]
     end
 
-    subgraph DB["SQLite local"]
-        Tables["Tabelas PK/FK"]
+    subgraph Supabase["Supabase"]
+        Auth["Auth\nlogin e sessao"]
+        Database["PostgreSQL\nPK/FK + RLS"]
+        EdgeFunction["Edge Function\nanalyze-consultation"]
     end
 
-    View --> Controller
-    Controller --> Service
-    Service --> DAO
-    DAO --> Config
-    Config --> Tables
-    Service --> Audio
-    Service --> STT
-    Service --> Responses
-    Service --> Report
+    subgraph AI["Provedores de IA"]
+        Gemini["Gemini API\nprovedor principal"]
+        OpenAI["OpenAI API\nfallback configuravel"]
+    end
+
+    UI --> SupabaseClient
+    UI --> Recorder
+    StaticApp --> UI
+    SupabaseClient --> Auth
+    SupabaseClient --> Database
+    SupabaseClient --> EdgeFunction
+    Recorder --> EdgeFunction
+    EdgeFunction --> Gemini
+    EdgeFunction --> OpenAI
+    EdgeFunction --> Database
 ```
 
-Responsabilidades:
+## Responsabilidades
 
-- Views Swing: interação desktop, formulários e tabelas.
-- Controllers: mediação entre tela, domínio e persistência.
-- Services: autenticação, gravação, transcrição, análise por IA, relatório e regras do fluxo.
-- DAOs: CRUD e consultas SQLite.
+- **React + Vite**: interface, login, pacientes, consulta, relatorios, alertas, planos e painel administrativo.
+- **MediaRecorder**: grava o audio da consulta no navegador quando houver consentimento.
+- **Supabase Auth**: autentica nutricionistas e administradores.
+- **PostgreSQL + RLS**: guarda pacientes, consultas, alertas, relatorios, planos e auditoria com controle de acesso.
+- **Edge Function**: recebe dados da consulta, audio/transcricao e contexto clinico; chama a IA e devolve JSON estruturado.
+- **Gemini/OpenAI**: geram transcricao, resumo, riscos, recomendacoes e sugestao inicial de plano.
+
+O audio bruto nao e persistido pelo fluxo principal. O sistema salva transcricao, resumo, alertas, relatorio e plano para revisao do nutricionista.
