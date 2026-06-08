@@ -3,6 +3,7 @@ package br.com.nutrimind.model;
 import java.time.LocalDateTime;
 
 public abstract class User {
+
     private long id;
     private String name;
     private String email;
@@ -11,7 +12,21 @@ public abstract class User {
     private boolean active;
     private LocalDateTime createdAt;
 
-    protected User(long id, String name, String email, String passwordHash, Role role, boolean active, LocalDateTime createdAt) {
+    public User() {
+        this.active = true;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public User(String name, String email, String passwordHash, Role role) {
+        this();
+        this.name = name;
+        this.email = email;
+        this.passwordHash = passwordHash;
+        this.role = role;
+    }
+
+    public User(long id, String name, String email, String passwordHash,
+                Role role, boolean active, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -21,36 +36,33 @@ public abstract class User {
         this.createdAt = createdAt;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
+    public String getDisplayName() {
         return name;
     }
 
-    public String getEmail() {
-        return email;
-    }
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
 
-    public String getPasswordHash() {
-        return passwordHash;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public Role getRole() {
-        return role;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public boolean isActive() {
-        return active;
-    }
+    public String getPasswordHash() { return passwordHash; }
+    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public Role getRole() { return role; }
+    public void setRole(Role role) { this.role = role; }
+
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    @Override
+    public String toString() {
+        return name + " (" + role + ")";
     }
 }
-

@@ -8,6 +8,9 @@ $cp = @(
 Push-Location $root
 try {
     java "-Dnutrimind.root=$root" -cp $cp br.com.nutrimind.App
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falha ao executar o desktop. Codigo de saida: $LASTEXITCODE"
+    }
 }
 finally {
     Pop-Location

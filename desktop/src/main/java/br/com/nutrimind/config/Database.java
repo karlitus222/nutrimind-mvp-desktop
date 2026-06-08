@@ -1,50 +1,36 @@
 package br.com.nutrimind.config;
 
+import br.com.nutrimind.exception.AppException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-/**
- * Classe de conexão com o banco SQLite.
- * Implementa o padrão Singleton para garantir uma única instância de conexão.
- *
- * Responsável: Pessoa 2 - Banco de dados e DER
- */
-public class Database {
+public final class Database {
+    private static Database instance;
 
-    private static final String URL = "jdbc:sqlite:nutrimind.db";
-    private static Connection instance;
+    private Database() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException e) {
+            throw new AppException("Driver SQLite não encontrado. Execute scripts/download-deps.ps1.", e);
+        }
+    }
 
-    // Construtor privado — impede criação de instâncias externas (Singleton)
-    private Database() {}
-
-    /**
-     * Retorna a instância única da conexão com o banco.
-     * Cria uma nova conexão caso ainda não exista ou esteja fechada.
-     *
-     * @return Connection conexão ativa com o SQLite
-     * @throws SQLException em caso de falha na conexão
-     */
-    public static Connection getInstance() throws SQLException {
-        if (instance == null || instance.isClosed()) {
-            instance = DriverManager.getConnection(URL);
-            instance.setAutoCommit(true);
-            System.out.println("Conexão com banco SQLite estabelecida.");
+    public static synchronized Database getInstance() {
+        if (instance == null) {
+            instance = new Database();
         }
         return instance;
     }
 
-    /**
-     * Fecha a conexão com o banco, se estiver aberta.
-     */
-    public static void closeConnection() {
+    public Connection getConnection() {
         try {
-            if (instance != null && !instance.isClosed()) {
-                instance.close();
-                System.out.println("Conexão com banco encerrada.");
-            }
+            Connection connection = DriverManager.getConnection(AppConfig.DB_URL);
+            connection.createStatement().execute("PRAGMA foreign_keys = ON");
+            return connection;
         } catch (SQLException e) {
-            System.err.println("Erro ao fechar conexão: " + e.getMessage());
+            throw new AppException("Não foi possível conectar ao SQLite.", e);
         }
     }
 }

@@ -24,6 +24,11 @@ public class MealPlanDao {
              PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             bind(ps, plan);
             ps.executeUpdate();
+            try (ResultSet keys = ps.getGeneratedKeys()) {
+                if (keys.next()) {
+                    plan.setId(keys.getLong(1));
+                }
+            }
             return plan;
         } catch (SQLException e) {
             throw new AppException("Falha ao salvar plano alimentar.", e);
@@ -92,4 +97,3 @@ public class MealPlanDao {
         );
     }
 }
-

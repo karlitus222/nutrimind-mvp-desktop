@@ -3,6 +3,7 @@ package br.com.nutrimind.model;
 import java.time.LocalDateTime;
 
 public class Consultation {
+
     private long id;
     private long patientId;
     private long nutritionistId;
@@ -15,9 +16,21 @@ public class Consultation {
     private String transcript;
     private String visualObservations;
 
-    public Consultation(long id, long patientId, long nutritionistId, LocalDateTime startedAt, LocalDateTime endedAt,
-                        ConsultationStatus status, boolean consentAudio, boolean consentVideo, String clinicalNotes,
-                        String transcript, String visualObservations) {
+    public Consultation() {
+        this.status = ConsultationStatus.EM_ANDAMENTO;
+    }
+
+    public Consultation(long patientId, long nutritionistId, LocalDateTime startedAt) {
+        this();
+        this.patientId = patientId;
+        this.nutritionistId = nutritionistId;
+        this.startedAt = startedAt;
+    }
+
+    public Consultation(long id, long patientId, long nutritionistId,
+                        LocalDateTime startedAt, LocalDateTime endedAt,
+                        ConsultationStatus status, boolean consentAudio, boolean consentVideo,
+                        String clinicalNotes, String transcript, String visualObservations) {
         this.id = id;
         this.patientId = patientId;
         this.nutritionistId = nutritionistId;
@@ -31,52 +44,41 @@ public class Consultation {
         this.visualObservations = visualObservations;
     }
 
-    public long getId() {
-        return id;
-    }
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+    public long getPatientId() { return patientId; }
+    public void setPatientId(long patientId) { this.patientId = patientId; }
 
-    public long getPatientId() {
-        return patientId;
-    }
+    public long getNutritionistId() { return nutritionistId; }
+    public void setNutritionistId(long nutritionistId) { this.nutritionistId = nutritionistId; }
 
-    public long getNutritionistId() {
-        return nutritionistId;
-    }
+    public LocalDateTime getStartedAt() { return startedAt; }
+    public void setStartedAt(LocalDateTime startedAt) { this.startedAt = startedAt; }
 
-    public LocalDateTime getStartedAt() {
-        return startedAt;
-    }
+    public LocalDateTime getEndedAt() { return endedAt; }
+    public void setEndedAt(LocalDateTime endedAt) { this.endedAt = endedAt; }
 
-    public LocalDateTime getEndedAt() {
-        return endedAt;
-    }
+    public ConsultationStatus getStatus() { return status; }
+    public void setStatus(ConsultationStatus status) { this.status = status; }
 
-    public ConsultationStatus getStatus() {
-        return status;
-    }
+    public boolean hasConsentAudio() { return consentAudio; }
+    public void setConsentAudio(boolean consentAudio) { this.consentAudio = consentAudio; }
 
-    public boolean hasConsentAudio() {
-        return consentAudio;
-    }
+    public boolean hasConsentVideo() { return consentVideo; }
+    public void setConsentVideo(boolean consentVideo) { this.consentVideo = consentVideo; }
 
-    public boolean hasConsentVideo() {
-        return consentVideo;
-    }
+    public String getClinicalNotes() { return clinicalNotes; }
+    public void setClinicalNotes(String clinicalNotes) { this.clinicalNotes = clinicalNotes; }
 
-    public String getClinicalNotes() {
-        return clinicalNotes;
-    }
+    public String getTranscript() { return transcript; }
+    public void setTranscript(String transcript) { this.transcript = transcript; }
 
-    public String getTranscript() {
-        return transcript;
-    }
+    public String getVisualObservations() { return visualObservations; }
+    public void setVisualObservations(String visualObservations) { this.visualObservations = visualObservations; }
 
-    public String getVisualObservations() {
-        return visualObservations;
+    @Override
+    public String toString() {
+        return "Consulta #" + id + " - " + status;
     }
 }
-

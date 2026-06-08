@@ -19,35 +19,51 @@ public class OpenAiRiskAnalysisService implements AiAnalysisService {
 
     @Override
     public AiAnalysisResult analyze(AnalysisRequest request) {
-        String payload = buildPayload(request);
-        String response = client.postJson("/v1/responses", payload);
+        String response = client.postJson("/v1/responses", buildPayload(request));
         String outputJson = extractOutputText(response);
         if (outputJson.isBlank()) {
-            throw new AppException("A IA não retornou uma análise estruturada.");
+            throw new AppException("A IA nao retornou uma analise estruturada.");
         }
         return parseStructuredOutput(outputJson);
     }
 
     private String buildPayload(AnalysisRequest request) {
         String prompt = """
-                Você é o módulo de IA do Nutrimind, um sistema acadêmico de apoio à nutrição comportamental.
-                Analise a transcrição e os dados clínicos em português. Não faça diagnóstico fechado.
-                Gere alertas para ansiedade alimentar, compulsão alimentar, dietas extremas, pular refeições,
-                desconforto emocional ligado à alimentação e outros riscos nutricionais relevantes.
-                A decisão final é sempre do nutricionista.
+                Voce e o modulo de IA do Nutrimind, um sistema academico de apoio a nutricao comportamental.
+                Analise a transcricao e os dados clinicos em portugues do Brasil.
+                A IA apoia o nutricionista, mas nao substitui decisao profissional e nao fecha diagnostico.
+                Nao invente fatos, habitos ou sintomas.
+                So afirme comportamentos especificos quando eles estiverem explicitamente escritos no historico,
+                nas notas clinicas, na transcricao ou nas observacoes visuais.
+                Se um achado vier do historico cadastrado, diga isso claramente na justificativa.
+                Se vier da fala atual, diga que veio da transcricao da consulta.
+                Se a fala for vaga, por exemplo "tenho problema com comida", nao conclua que a pessoa pula refeicoes,
+                tem compulsao, sente culpa ou restringe comida. Use um alerta leve de necessidade de aprofundamento
+                e recomende perguntas de triagem.
+                Identifique riscos apenas quando houver evidencia textual.
 
+                == Identificacao do paciente ==
                 Paciente: %s
-                Histórico alimentar: %s
-                Observações clínicas: %s
-                Observações visuais/comportamentais: %s
-                Transcrição da consulta: %s
-                Número de consultas anteriores: %d
+
+                == Historico alimentar cadastrado, possivelmente desatualizado ==
+                %s
+
+                == Notas clinicas do nutricionista nesta consulta ==
+                %s
+
+                == Fala/transcricao desta consulta ==
+                %s
+
+                == Observacoes visuais ou comportamentais desta consulta ==
+                %s
+
+                Numero de consultas anteriores: %d
                 """.formatted(
                 request.getPatient().getName(),
                 nullSafe(request.getPatient().getEatingHistory()),
                 nullSafe(request.getClinicalNotes()),
-                nullSafe(request.getVisualObservations()),
                 nullSafe(request.getTranscript()),
+                nullSafe(request.getVisualObservations()),
                 request.getHistory().size()
         );
 
@@ -84,7 +100,7 @@ public class OpenAiRiskAnalysisService implements AiAnalysisService {
                   "input": [
                     {
                       "role": "system",
-                      "content": [{"type":"input_text","text":"Responda somente com JSON válido seguindo o schema. Linguagem: português do Brasil."}]
+                      "content": [{"type":"input_text","text":"Responda somente com JSON valido seguindo o schema. Linguagem: portugues do Brasil."}]
                     },
                     {
                       "role": "user",
@@ -143,7 +159,6 @@ public class OpenAiRiskAnalysisService implements AiAnalysisService {
     }
 
     private String nullSafe(String value) {
-        return value == null || value.isBlank() ? "Não informado." : value;
+        return value == null || value.isBlank() ? "Nao informado." : value;
     }
 }
-
