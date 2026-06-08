@@ -30,6 +30,22 @@ A entrega principal é um aplicativo desktop:
 
 A aplicação web React/Vite também foi mantida no repositório e publicada na Vercel como apoio visual para o pitch, mas o sistema principal avaliado é o desktop Java.
 
+## Download para Apresentação
+
+Para usar o Nutrimind sem abrir PowerShell e sem instalar Java manualmente, baixe o pacote Windows pela release:
+
+- [Download do Nutrimind-Windows.zip](https://github.com/karlitus222/nutrimind-mvp-desktop/releases/download/v1.0.0/Nutrimind-Windows.zip)
+- [Página da release v1.0.0](https://github.com/karlitus222/nutrimind-mvp-desktop/releases/tag/v1.0.0)
+
+Como abrir:
+
+1. Baixe `Nutrimind-Windows.zip`.
+2. Extraia o ZIP.
+3. Abra a pasta `Nutrimind`.
+4. Dê dois cliques em `Nutrimind.exe`.
+
+O pacote já inclui runtime Java próprio.
+
 ## Funcionalidades
 
 - Login demonstrativo com perfis de nutricionista e administrador.
@@ -64,9 +80,11 @@ Fora do escopo: pagamentos reais, diagnóstico automático e prescrição sem re
 | Backend web demo | Supabase |
 | Deploy web demo | Vercel |
 
-## Como Rodar o Desktop
+## Como Rodar em Desenvolvimento
 
-Pré-requisito: Java 17 instalado.
+Use esta opção apenas para desenvolver, testar ou gerar um novo pacote.
+
+Pré-requisito para desenvolvimento: Java 17 instalado.
 
 Para desenvolvimento, na pasta do projeto, execute:
 
@@ -78,7 +96,13 @@ powershell -ExecutionPolicy Bypass -File scripts\run-desktop.ps1
 
 Para apresentação, o projeto pode ser empacotado como executável Windows. Assim o usuário não precisa abrir PowerShell para usar o sistema.
 
-O pacote gerado fica em:
+O pacote publicado fica na release:
+
+```text
+https://github.com/karlitus222/nutrimind-mvp-desktop/releases/tag/v1.0.0
+```
+
+Ao gerar localmente, o executável fica em:
 
 ```text
 desktop/dist/Nutrimind/Nutrimind.exe
