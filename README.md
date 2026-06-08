@@ -127,7 +127,14 @@ Credenciais de demonstração:
 
 ## Configuração da IA
 
-Para usar a análise real por IA no desktop, configure uma chave de API como variável de ambiente.
+O professor não precisa configurar chave nenhuma apenas para abrir o sistema, fazer login, cadastrar pacientes, navegar pelas telas e verificar a estrutura Java/Swing/SQLite.
+
+A chave só é necessária se a análise real por IA for testada no computador dele. Por segurança, nenhuma chave de API é salva no GitHub, no ZIP ou dentro do `.exe`.
+
+Para a apresentação, existem duas opções:
+
+1. Rodar a demonstração da IA no computador do grupo, onde a chave já pode estar configurada.
+2. Se o professor quiser testar a IA real no computador dele, ele precisará configurar uma chave própria de Gemini ou OpenAI como variável de ambiente.
 
 Opção recomendada para apresentação:
 
