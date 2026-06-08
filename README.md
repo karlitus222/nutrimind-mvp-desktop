@@ -1,65 +1,91 @@
 # Nutrimind
 
-Sistema academico de apoio a nutricao comportamental, desenvolvido para a entrega do **II InterConnect Evolution - Prototipagem Tecnica**.
+Sistema acadêmico de apoio à nutrição comportamental, desenvolvido para a entrega do **II InterConnect Evolution - Prototipagem Técnica**.
 
-## Entrega Principal
-
-O projeto sera apresentado como um unico aplicativo desktop:
-
-- **Java 17**
-- **Swing**
-- **SQLite**
-- **Arquitetura MVC**
-- **DAO para persistencia**
-- **Singleton de conexao**
-- **CRUDs e consultas relacionadas a pacientes**
-- **IA assistiva obrigatoria no fluxo de analise**
-
-A aplicacao web React/Vite continua no repositorio e publicada na Vercel como apoio visual/demo, mas nao substitui o desktop na entrega principal.
+O Nutrimind ajuda o nutricionista a registrar pacientes, organizar consultas, analisar relatos com apoio de IA, gerar alertas, revisar relatórios e aprovar planos alimentares. A IA é usada apenas como apoio à decisão: o profissional continua responsável por avaliar, ajustar e aprovar tudo.
 
 ## Integrantes
 
-- Pessoa 1
-- Pessoa 2
-- Pessoa 3
-- Pessoa 4
-- Pessoa 5
-- Pessoa 6
-- Pessoa 7
+- João Victor Martins Freitas
+- Pedro Henrique Dias Carneiro Matos Silva
+- David Gabriel Macedo Carvalho Lima
+- Carlos Gabriel Raposo Landim
+- Roger Oliveira Feitosa
+- João Victor da Cunha Oliveira
+- Luiz Eduardo Rios Barradas
+- Guilherme Henrique Macedo Estrela
 
-## Escopo do Desktop
+## Entrega Principal
 
-O desktop contempla:
+A entrega principal é um aplicativo desktop:
 
-- login demonstrativo com perfil de nutricionista e administrador;
-- cadastro, listagem, edicao e inativacao de pacientes;
-- cadastro administrativo de nutricionistas;
-- registro de consultas vinculadas aos pacientes;
-- consentimento de audio/video;
-- gravacao de audio em `.wav`;
-- vinculo opcional de video;
-- transcricao e analise por IA;
-- alertas com severidade;
-- decisao clinica sobre alertas;
-- relatorio da consulta;
-- plano alimentar em revisao;
-- aprovacao profissional do plano;
-- banco SQLite com PK/FK;
-- documentacao tecnica com DER, componentes, implantacao e checklist.
+- Java 17
+- Swing
+- SQLite
+- Arquitetura MVC
+- DAOs para persistência
+- Singleton de conexão com banco
+- CRUDs e consultas relacionadas a pacientes
+- IA assistiva obrigatória no fluxo de análise
 
-Nao fazem parte do escopo final: pagamentos reais, diagnostico automatico ou prescricao sem revisao profissional.
+A aplicação web React/Vite também foi mantida no repositório e publicada na Vercel como apoio visual para o pitch, mas o sistema principal avaliado é o desktop Java.
 
-## IA no Desktop
+## Funcionalidades
 
-A IA e apoio a decisao. O nutricionista sempre revisa e aprova os resultados antes de usar.
+- Login demonstrativo com perfis de nutricionista e administrador.
+- Cadastro, listagem, edição e inativação de pacientes.
+- Cadastro administrativo de nutricionistas.
+- Registro de consultas vinculadas aos pacientes.
+- Consentimento de áudio e vídeo.
+- Gravação de áudio em `.wav`.
+- Vínculo opcional de vídeo à consulta.
+- Transcrição e análise por IA.
+- Alertas com severidade e justificativa.
+- Registro de decisão clínica frente aos alertas.
+- Relatório da consulta.
+- Plano alimentar em revisão.
+- Aprovação profissional do plano alimentar.
+- Banco SQLite com chaves primárias e estrangeiras.
+- Documentação técnica com DER, diagramas e checklist.
 
-O desktop agora reaproveita o fluxo do web:
+Fora do escopo: pagamentos reais, diagnóstico automático e prescrição sem revisão profissional.
 
-- usa **Gemini API** como provedor principal quando `GEMINI_API_KEY` estiver configurada;
-- usa **OpenAI API** como fallback quando nao houver Gemini e `OPENAI_API_KEY` existir;
-- bloqueia analise, transcricao e relatorio inteligente se nenhuma chave estiver configurada.
+## Tecnologias
 
-Configuracao recomendada para apresentacao gratuita:
+| Parte | Tecnologia |
+| --- | --- |
+| Desktop principal | Java 17 + Swing |
+| Banco local | SQLite |
+| Persistência | DAO + JDBC |
+| Arquitetura | MVC |
+| IA principal | Gemini API |
+| IA fallback | OpenAI API |
+| Web demo | React + Vite |
+| Backend web demo | Supabase |
+| Deploy web demo | Vercel |
+
+## Como Rodar o Desktop
+
+Pré-requisito: Java 17 instalado.
+
+Na pasta do projeto, execute:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\run-desktop.ps1
+```
+
+Credenciais de demonstração:
+
+| Perfil | E-mail | Senha |
+| --- | --- | --- |
+| Nutricionista | `nutri@nutrimind.com` | `123456` |
+| Administrador | `admin@nutrimind.com` | `admin123` |
+
+## Configuração da IA
+
+Para usar a análise real por IA no desktop, configure uma chave de API como variável de ambiente.
+
+Opção recomendada para apresentação:
 
 ```text
 GEMINI_API_KEY=sua-chave
@@ -75,73 +101,65 @@ OPENAI_TRANSCRIPTION_MODEL=gpt-4o-mini-transcribe
 OPENAI_ANALYSIS_MODEL=gpt-5-mini
 ```
 
+Sem chave configurada, o sistema abre normalmente para cadastros e navegação, mas bloqueia transcrição, análise inteligente e relatório gerado por IA.
+
 Nunca coloque chaves de API no GitHub.
 
-## Como Rodar o Desktop
-
-Pre-requisito: Java 17 instalado.
-
-No Explorador de Arquivos, abra a pasta:
-
-```text
-C:\Users\carlo\OneDrive\Documentos\New project 6
-```
-
-Para rodar pelo terminal:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\run-desktop.ps1
-```
-
-Credenciais de demonstracao:
-
-- Nutricionista: `nutri@nutrimind.com` / `123456`
-- Administrador: `admin@nutrimind.com` / `admin123`
-
-## Fluxo Principal
+## Fluxo de Uso
 
 1. O nutricionista entra no desktop.
 2. Cadastra ou seleciona um paciente.
-3. Registra consentimento, notas clinicas e transcricao manual ou audio gravado.
-4. Solicita analise obrigatoria por IA.
-5. O sistema salva consulta, resumo, alertas, relatorio e plano em revisao.
-6. O nutricionista registra decisoes frente aos alertas.
+3. Registra consentimento, notas clínicas e transcrição manual ou áudio gravado.
+4. Solicita análise por IA.
+5. O sistema salva consulta, resumo, alertas, relatório e plano em revisão.
+6. O nutricionista registra decisões frente aos alertas.
 7. O nutricionista revisa e aprova o plano alimentar.
 
-## Aplicacao Web Mantida
+## Como Testar
 
-A versao web continua disponivel para demonstracao visual:
+Execute:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\test-desktop.ps1
+```
+
+Resultado esperado:
+
+```text
+BuildScriptTest OK
+SmokeTest OK
+Testes desktop concluidos.
+```
+
+## Web Demo
+
+A versão web continua disponível como apoio para apresentação e teste pelo celular:
 
 - URL: `https://nutrimind-two.vercel.app`
 - Stack: React + Vite + Supabase + Vercel
 - Login demo: `demo@nutrimind.app` / `Nutrimind@2026`
 
-Ela foi mantida porque ajuda no pitch e no teste pelo celular, mas o requisito academico principal fica coberto pelo desktop Java.
+## Estrutura do Repositório
 
-## Organizacao no GitHub
+```text
+desktop/     Aplicação Java Swing, SQLite, MVC, DAOs e testes
+docs/        DER, diagramas, checklist, guia GitHub e documentação da IA
+scripts/     Scripts de compilação, execução e testes
+supabase/    Schema e Edge Function da versão web demo
+web/         Aplicação React/Vite usada como apoio visual
+```
 
-O grupo deve trabalhar com branches e Pull Requests. Ninguem deve trabalhar direto na `main`.
+## Documentação
 
-Sugestao de divisao:
-
-- `pessoa1-login-readme`
-- `pessoa2-banco-der`
-- `pessoa3-modelos-poo`
-- `pessoa4-dao-crud`
-- `pessoa5-interface-swing`
-- `pessoa6-controllers-fluxo`
-- `pessoa7-ia-testes-docs`
-
-## Documentacao
-
-- [Divisao de tarefas](docs/divisao-de-tarefas.md)
-- [DER logico](docs/DER.md)
+- [Divisão de tarefas](docs/divisao-de-tarefas.md)
+- [DER lógico](docs/DER.md)
 - [Diagrama de componentes](docs/diagrama-componentes.md)
-- [Diagrama de implantacao](docs/diagrama-implantacao.md)
+- [Diagrama de implantação](docs/diagrama-implantacao.md)
 - [Checklist de qualidade](docs/checklist-qualidade.md)
 - [Cuidados com IA](docs/ia-openai.md)
 - [Teste final](docs/teste-final.md)
+- [Fluxo no GitHub](docs/fluxo-github.md)
 
-## Aviso Etico
+## Aviso Ético
 
-O Nutrimind e um sistema academico demonstrativo. A IA apoia a organizacao da consulta, mas nao substitui anamnese, avaliacao presencial, diagnostico, prescricao nutricional ou encaminhamento profissional.
+O Nutrimind é um sistema acadêmico demonstrativo. A IA apoia a organização da consulta, mas não substitui anamnese, avaliação presencial, diagnóstico, prescrição nutricional ou encaminhamento profissional.
