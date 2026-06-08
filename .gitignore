@@ -4,6 +4,7 @@ demo/
 desktop/data/nutrimind.db
 desktop/data/media/
 desktop/data/exports/
+desktop/dist/
 desktop/out/
 desktop/out-test/
 desktop/out-test-runtime/

@@ -68,11 +68,31 @@ Fora do escopo: pagamentos reais, diagnóstico automático e prescrição sem re
 
 Pré-requisito: Java 17 instalado.
 
-Na pasta do projeto, execute:
+Para desenvolvimento, na pasta do projeto, execute:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\run-desktop.ps1
 ```
+
+## Executável Windows
+
+Para apresentação, o projeto pode ser empacotado como executável Windows. Assim o usuário não precisa abrir PowerShell para usar o sistema.
+
+O pacote gerado fica em:
+
+```text
+desktop/dist/Nutrimind/Nutrimind.exe
+```
+
+Para gerar o executável:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\build-desktop-exe.ps1
+```
+
+Depois disso, basta abrir a pasta `desktop/dist/Nutrimind` e dar dois cliques em `Nutrimind.exe`.
+
+O pacote inclui runtime Java próprio, então a pessoa que for apenas testar o sistema não precisa instalar Java separadamente.
 
 Credenciais de demonstração:
 
