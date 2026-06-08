@@ -1,8 +1,8 @@
 # Nutrimind
 
-Sistema acadêmico de apoio à nutrição comportamental, desenvolvido para a entrega do **II InterConnect Evolution - Prototipagem Técnica**.
+O Nutrimind é um sistema acadêmico de apoio à nutrição comportamental, desenvolvido para a entrega do **II InterConnect Evolution - Prototipagem Técnica**.
 
-O Nutrimind ajuda o nutricionista a registrar pacientes, organizar consultas, analisar relatos com apoio de IA, gerar alertas, revisar relatórios e aprovar planos alimentares. A IA é usada apenas como apoio à decisão: o profissional continua responsável por avaliar, ajustar e aprovar tudo.
+Nosso objetivo foi criar uma ferramenta que ajude o nutricionista a organizar atendimentos, registrar pacientes, acompanhar consultas e usar inteligência artificial como apoio para identificar pontos de atenção no relato do paciente. A IA não substitui a avaliação profissional: ela apenas auxilia na organização das informações e na geração de alertas que precisam ser revisados pelo nutricionista.
 
 ## Integrantes
 
@@ -15,128 +15,71 @@ O Nutrimind ajuda o nutricionista a registrar pacientes, organizar consultas, an
 - Luiz Eduardo Rios Barradas
 - Guilherme Henrique Macedo Estrela
 
-## Entrega Principal
+## Entrega
 
-A entrega principal é um aplicativo desktop:
+A entrega principal do projeto é um aplicativo desktop desenvolvido em **Java 17**, com interface em **Swing** e banco de dados **SQLite**.
 
-- Java 17
-- Swing
-- SQLite
-- Arquitetura MVC
-- DAOs para persistência
-- Singleton de conexão com banco
-- CRUDs e consultas relacionadas a pacientes
-- IA assistiva obrigatória no fluxo de análise
+O projeto contempla os requisitos técnicos do MVP:
 
-A aplicação web React/Vite também foi mantida no repositório e publicada na Vercel como apoio visual para o pitch, mas o sistema principal avaliado é o desktop Java.
+- arquitetura MVC;
+- uso de DAO para persistência;
+- Singleton para conexão com o banco;
+- CRUDs de entidades relacionadas;
+- consultas vinculadas a pacientes;
+- banco SQLite com chaves primárias e estrangeiras;
+- documentação técnica com DER, diagramas e checklist;
+- fluxo de consulta com apoio de IA.
 
-## Download para Apresentação
-
-Para usar o Nutrimind sem abrir PowerShell e sem instalar Java manualmente, baixe o pacote Windows pela release:
-
-- [Download do Nutrimind-Windows.zip](https://github.com/karlitus222/nutrimind-mvp-desktop/releases/download/v1.0.0/Nutrimind-Windows.zip)
-- [Página da release v1.0.0](https://github.com/karlitus222/nutrimind-mvp-desktop/releases/tag/v1.0.0)
-
-Como abrir:
-
-1. Baixe `Nutrimind-Windows.zip`.
-2. Extraia o ZIP.
-3. Abra a pasta `Nutrimind`.
-4. Dê dois cliques em `Nutrimind.exe`.
-
-O pacote já inclui runtime Java próprio.
+Também mantivemos uma versão web demonstrativa para apoio visual na apresentação, mas o sistema principal do trabalho é o desktop Java.
 
 ## Funcionalidades
 
-- Login demonstrativo com perfis de nutricionista e administrador.
-- Cadastro, listagem, edição e inativação de pacientes.
+- Login com perfis de nutricionista e administrador.
+- Cadastro, edição, listagem e inativação de pacientes.
 - Cadastro administrativo de nutricionistas.
-- Registro de consultas vinculadas aos pacientes.
-- Consentimento de áudio e vídeo.
+- Registro de consultas vinculadas ao paciente.
+- Consentimento para uso de áudio e vídeo.
 - Gravação de áudio em `.wav`.
-- Vínculo opcional de vídeo à consulta.
-- Transcrição e análise por IA.
-- Alertas com severidade e justificativa.
-- Registro de decisão clínica frente aos alertas.
+- Transcrição e análise com apoio de IA.
+- Geração de alertas com severidade e justificativa.
+- Registro da decisão clínica sobre cada alerta.
 - Relatório da consulta.
 - Plano alimentar em revisão.
 - Aprovação profissional do plano alimentar.
-- Banco SQLite com chaves primárias e estrangeiras.
-- Documentação técnica com DER, diagramas e checklist.
+- Histórico e dados de demonstração.
 
-Fora do escopo: pagamentos reais, diagnóstico automático e prescrição sem revisão profissional.
-
-## Tecnologias
-
-| Parte | Tecnologia |
-| --- | --- |
-| Desktop principal | Java 17 + Swing |
-| Banco local | SQLite |
-| Persistência | DAO + JDBC |
-| Arquitetura | MVC |
-| IA principal | Gemini API |
-| IA fallback | OpenAI API |
-| Web demo | React + Vite |
-| Backend web demo | Supabase |
-| Deploy web demo | Vercel |
-
-## Como Rodar em Desenvolvimento
-
-Use esta opção apenas para desenvolver, testar ou gerar um novo pacote.
-
-Pré-requisito para desenvolvimento: Java 17 instalado.
-
-Para desenvolvimento, na pasta do projeto, execute:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\run-desktop.ps1
-```
+O sistema não realiza diagnóstico automático e não substitui prescrição, anamnese ou avaliação clínica feita pelo nutricionista.
 
 ## Executável Windows
 
-Para apresentação, o projeto pode ser empacotado como executável Windows. Assim o usuário não precisa abrir PowerShell para usar o sistema.
+Para facilitar a avaliação e a apresentação, disponibilizamos um pacote Windows com o aplicativo já empacotado.
 
-O pacote publicado fica na release:
+- [Baixar Nutrimind-Windows.zip](https://github.com/karlitus222/nutrimind-mvp-desktop/releases/download/v1.0.0/Nutrimind-Windows.zip)
+- [Ver release v1.0.0](https://github.com/karlitus222/nutrimind-mvp-desktop/releases/tag/v1.0.0)
 
-```text
-https://github.com/karlitus222/nutrimind-mvp-desktop/releases/tag/v1.0.0
-```
+Como executar:
 
-Ao gerar localmente, o executável fica em:
+1. Baixe o arquivo `Nutrimind-Windows.zip`.
+2. Extraia o ZIP.
+3. Abra a pasta `Nutrimind`.
+4. Execute `Nutrimind.exe`.
 
-```text
-desktop/dist/Nutrimind/Nutrimind.exe
-```
+O pacote já inclui o runtime Java necessário para abrir o sistema.
 
-Para gerar o executável:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\build-desktop-exe.ps1
-```
-
-Depois disso, basta abrir a pasta `desktop/dist/Nutrimind` e dar dois cliques em `Nutrimind.exe`.
-
-O pacote inclui runtime Java próprio, então a pessoa que for apenas testar o sistema não precisa instalar Java separadamente.
-
-Credenciais de demonstração:
+## Credenciais de Demonstração
 
 | Perfil | E-mail | Senha |
 | --- | --- | --- |
 | Nutricionista | `nutri@nutrimind.com` | `123456` |
 | Administrador | `admin@nutrimind.com` | `admin123` |
 
-## Configuração da IA
+## Inteligência Artificial
 
-O professor não precisa configurar chave nenhuma apenas para abrir o sistema, fazer login, cadastrar pacientes, navegar pelas telas e verificar a estrutura Java/Swing/SQLite.
+A IA é usada no fluxo de consulta para apoiar a análise do relato do paciente. Ela pode auxiliar na transcrição, no resumo da consulta, na criação de alertas e na sugestão inicial de plano alimentar.
 
-A chave só é necessária se a análise real por IA for testada no computador dele. Por segurança, nenhuma chave de API é salva no GitHub, no ZIP ou dentro do `.exe`.
+Por segurança, nenhuma chave de API foi salva no repositório, no ZIP ou no executável. O sistema pode ser aberto e navegado sem chave, incluindo login, cadastros, telas, banco e CRUDs. A chave externa só é necessária para executar uma análise real por IA.
 
-Para a apresentação, existem duas opções:
-
-1. Rodar a demonstração da IA no computador do grupo, onde a chave já pode estar configurada.
-2. Se o professor quiser testar a IA real no computador dele, ele precisará configurar uma chave própria de Gemini ou OpenAI como variável de ambiente.
-
-Opção recomendada para apresentação:
+Configuração recomendada para uso com Gemini:
 
 ```text
 GEMINI_API_KEY=sua-chave
@@ -144,7 +87,7 @@ GEMINI_ANALYSIS_MODEL=gemini-2.5-flash-lite
 GEMINI_TRANSCRIPTION_MODEL=gemini-2.5-flash-lite
 ```
 
-Fallback pago:
+Configuração alternativa com OpenAI:
 
 ```text
 OPENAI_API_KEY=sua-chave
@@ -152,23 +95,57 @@ OPENAI_TRANSCRIPTION_MODEL=gpt-4o-mini-transcribe
 OPENAI_ANALYSIS_MODEL=gpt-5-mini
 ```
 
-Sem chave configurada, o sistema abre normalmente para cadastros e navegação, mas bloqueia transcrição, análise inteligente e relatório gerado por IA.
+Sem chave configurada, o fluxo de IA real fica indisponível, mas o restante do sistema continua funcionando para demonstração técnica.
 
-Nunca coloque chaves de API no GitHub.
+## Fluxo Principal
 
-## Fluxo de Uso
+1. O nutricionista acessa o sistema.
+2. Seleciona ou cadastra um paciente.
+3. Registra uma consulta.
+4. Informa observações clínicas e, quando houver consentimento, grava áudio.
+5. Solicita o apoio da IA.
+6. O sistema registra resumo, alertas, relatório e plano em revisão.
+7. O nutricionista avalia os alertas e registra sua decisão.
+8. O plano alimentar só é aprovado após revisão profissional.
 
-1. O nutricionista entra no desktop.
-2. Cadastra ou seleciona um paciente.
-3. Registra consentimento, notas clínicas e transcrição manual ou áudio gravado.
-4. Solicita análise por IA.
-5. O sistema salva consulta, resumo, alertas, relatório e plano em revisão.
-6. O nutricionista registra decisões frente aos alertas.
-7. O nutricionista revisa e aprova o plano alimentar.
+## Tecnologias Utilizadas
 
-## Como Testar
+| Área | Tecnologia |
+| --- | --- |
+| Aplicação principal | Java 17 |
+| Interface gráfica | Swing |
+| Banco de dados | SQLite |
+| Persistência | JDBC + DAO |
+| Arquitetura | MVC |
+| IA principal | Gemini API |
+| IA alternativa | OpenAI API |
+| Web demonstrativa | React + Vite |
+| Backend da web demo | Supabase |
+| Deploy da web demo | Vercel |
 
-Execute:
+## Como Rodar pelo Código
+
+Para rodar o projeto a partir do código-fonte, é necessário ter Java 17 instalado.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\run-desktop.ps1
+```
+
+Para gerar novamente o executável Windows:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\build-desktop-exe.ps1
+```
+
+O executável gerado localmente fica em:
+
+```text
+desktop/dist/Nutrimind/Nutrimind.exe
+```
+
+## Testes
+
+O projeto possui um teste de fumaça para validar compilação, login, dados iniciais, fluxo de consulta, alertas, relatório, plano alimentar e permissões.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\test-desktop.ps1
@@ -182,22 +159,24 @@ SmokeTest OK
 Testes desktop concluidos.
 ```
 
-## Web Demo
+## Web Demonstrativa
 
-A versão web continua disponível como apoio para apresentação e teste pelo celular:
+Além do desktop, mantivemos uma versão web para apoio na apresentação:
 
 - URL: `https://nutrimind-two.vercel.app`
-- Stack: React + Vite + Supabase + Vercel
-- Login demo: `demo@nutrimind.app` / `Nutrimind@2026`
+- Login: `demo@nutrimind.app`
+- Senha: `Nutrimind@2026`
+
+Essa versão ajuda a demonstrar a ideia do produto pelo navegador, mas não substitui a entrega desktop.
 
 ## Estrutura do Repositório
 
 ```text
 desktop/     Aplicação Java Swing, SQLite, MVC, DAOs e testes
-docs/        DER, diagramas, checklist, guia GitHub e documentação da IA
-scripts/     Scripts de compilação, execução e testes
-supabase/    Schema e Edge Function da versão web demo
-web/         Aplicação React/Vite usada como apoio visual
+docs/        DER, diagramas, checklist e documentação técnica
+scripts/     Scripts de execução, teste e empacotamento
+supabase/    Estrutura usada pela versão web demonstrativa
+web/         Aplicação React/Vite da versão web demonstrativa
 ```
 
 ## Documentação
@@ -211,6 +190,6 @@ web/         Aplicação React/Vite usada como apoio visual
 - [Teste final](docs/teste-final.md)
 - [Fluxo no GitHub](docs/fluxo-github.md)
 
-## Aviso Ético
+## Observação Ética
 
-O Nutrimind é um sistema acadêmico demonstrativo. A IA apoia a organização da consulta, mas não substitui anamnese, avaliação presencial, diagnóstico, prescrição nutricional ou encaminhamento profissional.
+O Nutrimind é um sistema acadêmico e demonstrativo. A inteligência artificial é utilizada somente como apoio à organização das informações da consulta. A decisão final, o diagnóstico, a prescrição e qualquer encaminhamento continuam sendo responsabilidade do profissional de nutrição.
